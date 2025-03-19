@@ -66,8 +66,10 @@ def displayScene(sceneKey):
         print()
         messagePrinter(f"A {sceneKey["item"]} has been added to you inventory!")
     if "options" in sceneKey:
-        optionHandler(sceneKey)
+        response = inputHandler(sceneKey)
+        optionHandler(sceneKey, response)
     elif "bool" in sceneKey:
+        response = inputHandler()
         boolHandler(sceneKey)
     elif "move" in sceneKey:
         moveScene(sceneKey)
