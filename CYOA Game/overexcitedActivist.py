@@ -44,11 +44,11 @@ def keyBindHandler():
         response = input("Change key bindings? (y/n)").lower()
     if response == "y":
         inventoryBind = input("Inventory: ")
-        while inventoryBind in ["1", "2", "3", "4"]:
+        while inventoryBind in ["1", "2", "3", "4", ""]:
             messagePrinter(f"[{inventoryBind}] is already bound to an option, please choose another key.")
             inventoryBind = input("Inventory: ")
         healthBind = input("Health: ")
-        while healthBind in ["1", "2", "3", "4", inventoryBind]:
+        while healthBind in ["1", "2", "3", "4", "", inventoryBind]:
             if healthBind == inventoryBind:
                 messagePrinter(f"[{inventoryBind}] is already bound to inventory, please choose another key.")
             elif healthBind in ["1", "2", "3", "4"]:
@@ -68,7 +68,7 @@ def boolHandler(sceneKey):
     global scene
     try:
         print()
-        choice = input(f"Bool: {sceneKey["bool"]} ").lower()
+        choice = inputHandler(f"{sceneKey["bool"]} ").lower()
         if choice == 'y':
             scene = f"{scene}-True"
             displayScene(scenes[scene])
@@ -118,7 +118,6 @@ def displayScene(sceneKey):
         optionHandler(sceneKey) #Requesting input to trigger game progression
 
     elif "bool" in sceneKey: #Checking if there is a boolean to choose from
-        choice = inputHandler(sceneKey["bool"])
         boolHandler(sceneKey)
 
     elif "move" in sceneKey: #Move to the next scene
