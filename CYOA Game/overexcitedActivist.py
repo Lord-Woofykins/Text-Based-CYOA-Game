@@ -26,6 +26,33 @@ spaceDelayMultiplier = 1.1
 
 # Functions below this point
 
+def challengeSpeechContest():
+    messagePrinter("Threadit            r/Politics")
+    username = inputHandler("Choose your username: ")
+    messagePrinter(f"{username}: I hate cheese! #CheeseIsBad")
+
+
+
+    messagePrinter("Speech Contest" + "\n" + "Write the best speech (angriest) speech possible!")
+    print()
+    
+    speech = input("Speech: ")
+    speechScore = 0
+    if len(speech.split()) < 50:
+        speechScore += 1
+    if "cheese" in speech.lower():
+        speechScore += 1
+    
+    
+
+
+
+
+
+
+
+
+
 # Print messages with a delay between letters
 def messagePrinter(message):
     for letter in message:
