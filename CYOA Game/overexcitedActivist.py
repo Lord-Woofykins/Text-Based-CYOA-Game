@@ -58,22 +58,6 @@ def keyBindHandler():
         messagePrinter(f"Inventory: [{inventoryBind}]" + "\n" + f"Health: [{healthBind}]" + "\n")
     return response
 
-# Display the current scene and its options
-def displayScene(sceneKey):
-    messagePrinter(sceneKey["text"])
-    if "item" in sceneKey:
-        inventory.append(sceneKey["item"])
-        print()
-        messagePrinter(f"A {sceneKey["item"]} has been added to you inventory!")
-    if "options" in sceneKey:
-        response = inputHandler(sceneKey)
-        optionHandler(sceneKey, response)
-    elif "bool" in sceneKey:
-        response = inputHandler()
-        boolHandler(sceneKey)
-    elif "move" in sceneKey:
-        moveScene(sceneKey)
-
 def moveScene(sceneKey):
     global scene
     scene = sceneKey["move"]
@@ -102,29 +86,51 @@ def boolHandler(sceneKey):
 
 # Handle user input and navigate to the next scene
 def optionHandler(sceneKey):
-    global scene
-    for key, option in sceneKey["options"].items():
-        if key != "optionText":
-            messagePrinter(f"{key.title()}: {option}")
-    print()
-    if "optionText" in sceneKey["options"]:
-        choice = 0
-        try:
-            while choice not in range(1, len(sceneKey["options"])):
-                choice = int(input(sceneKey["options"]["optionText"]))
-                if choice not in range(1, len(sceneKey["options"])):
-                    print("Please enter a valid option.")
-            scene = f"{scene}-{choice}"
-            displayScene(scenes[scene])
-        except ValueError:
-            os.system("clear")
-            print("There was an error with inputting, please input a number.", "\n")
-            optionHandler(sceneKey)
+    global scene #Accessing the scene variable globally so that changes are kept
+    choice = 0 #Setting the choice to 0 to trigger the while loop
+    try:
+        while choice not in range(1, len(sceneKey["options"])):
+            choice = int(inputHandler(sceneKey["options"]["optionText"]))
+            if choice not in range(1, len(sceneKey["options"])):
+                print("Please enter a valid option.")
+        scene = f"{scene}-{choice}"
+        displayScene(scenes[scene])
+    except ValueError:
+        os.system("clear")
+        print("There was an error with inputting, please input a number.", "\n")
+        optionHandler(sceneKey)
+
+# Display the current scene and its options
+def displayScene(sceneKey):
+    messagePrinter(sceneKey["text"]) #Displaying the text of the scene
+    if "item" in sceneKey: #Adding any items to the inventory
+        inventory.append(sceneKey["item"])
+        print()
+        messagePrinter(f"A {sceneKey["item"]} has been added to you inventory!")
+
+    if "options" in sceneKey: # Checking if there are options to choose from
+        #Displaying the options
+        for key, option in sceneKey["options"].items():
+            if key != "optionText":
+                messagePrinter(f"{key.title()}: {option}")
+        print()
+        
+        optionHandler(sceneKey) #Requesting input to trigger game progression
+
+    elif "bool" in sceneKey: #Checking if there is a boolean to choose from
+        choice = inputHandler(sceneKey["bool"])
+        boolHandler(sceneKey)
+
+    elif "move" in sceneKey: #Move to the next scene
+        moveScene(sceneKey)
+    
+
 
 #Handle general inputting from the user
 def inputHandler(inputText):
+    #Asking for input to trigger requested functions
     response = input(inputText)
-    if response == inventoryBind:
+    if response == inventoryBind: #Showing inventory contents
         if inventory:
             messagePrinter("Inventory:")
             print()
@@ -134,27 +140,35 @@ def inputHandler(inputText):
         else:
             messagePrinter("Inventory is empty.")
         inputHandler(inputText)
-    elif response == healthBind:
+    elif response == healthBind: #Showing health
         messagePrinter(f"Health: {health}")
         inputHandler(inputText)
 
+    return response #Returning a response to be used by functions such as optionHandler or boolHandler
+
+
+#Display opening text and handle calling of keybind function
 def intro():
+    #Displaying opening text & info
     messagePrinter("Welcome To Overexcited Activist!" + "\n")
     time.sleep(0.2)
     messagePrinter("Controls:")
     messagePrinter(f"Inventory: [{inventoryBind}]" + "\n" + f"Health: [{healthBind}]" + "\n")
     time.sleep(0.2)
+
+    #Requesting changes to keybinds of inventory and health
     response = keyBindHandler()
-    if response != "n":
+    if response != "n": #Checking if confirmation is necessary
         response = input("Confirm bindings? (y) ").lower()
-        while response != "y":
+        while response != "y": #Looping until the user confirms the keybinds
             keyBindHandler()
             response = input("Confirm bindings? Note: [n] will retain new bindings. (y/n) ").lower()
-    inputHandler("Begin? ")
+    
+    inputHandler("Begin? ") #Requesting input to begin the game
     os.system("clear")
 
 # Game Loop
-scene = "scene1"
-intro()
+scene = "scene1" #Set the starting scene
+intro() #Call into to the game
 while scene != "end":
     displayScene(scenes[scene])
