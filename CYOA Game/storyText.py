@@ -56,7 +56,13 @@ scenes = {
         }
     },
     "scene2-1-1": {
-
+        "text": "You retreat to your parent’s basement to write hate speech on twitter and reddit.",
+        "move": "scene2-1-2"
+    },
+    "scene2-1-2": {
+        "text": "While you are on one of your more radical rants, someone who thinks they know soooooo much better decides to challenge your opinions.",
+        "challengeSpeech": "Challenge them?",
+        "challengeText": "Prove. Them. Wrong.",
     },
     "scene2-2": {
         "text": "You come up with a few key solutions",
@@ -81,6 +87,7 @@ scenes = {
     },
 
     #Scene 3A
+
 
     #Scene 3B
     "scene3B": {
