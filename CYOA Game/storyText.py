@@ -42,13 +42,21 @@ scenes = {
         "options": {
             "option1": "Go through a get rich quick scheme.",
             "option2": "Solve climate change, it can't be that hard.",
-            "optionText": "What kind of difference will you make?",
+            "optionText": "What kind of difference will you make? (1-2) ",
         }
     },
 
     #Beginning of political path
     "scene2-1": {
-        "text"
+        "text": "After going down a get rich quick scheme, you begin to realise that the influencial game is easier than you realise.",
+        "options": {
+            "option1": "Online",
+            "option2": "Joining the local political party",
+            "optionText": "How do you want to become popular? (1-2) "
+        }
+    },
+    "scene2-1-1": {
+
     },
     "scene2-2": {
         "text": "You come up with a few key solutions",
@@ -69,20 +77,22 @@ scenes = {
     },
     "scene2-2-3": {
         "text": "Replace coal with nuclear. You think to yourself, 'It's so simple, why hasn't anyone thought of this before?' You convince your best friend to help you, as well as a bunch of extremists from Twitter (aka Elon media) and Instagram to help you and decide to protest at the council office for change.",
-        "move": "scene3"
+        "move": "scene3B"
     },
 
-    #Scene 3
-    "scene3": {
+    #Scene 3A
+
+    #Scene 3B
+    "scene3B": {
         "text": "While setting up, a passer by starts bugging you to let him join. However, you already have a full party. Kick out your best friend for him?",
         "bool": "Kick out best friend?"
     },
-    "scene3-True": {
+    "scene3B-True": {
         "text": "Your friend is super mad, and grumbles to himself about how he should’ve stayed at uni instead of joining you. He will remember this.",
         "harderPoliticalEnding": True,
         "move": "scene3-True-1"
     },
-    "scene3-False": {
+    "scene3B-False": {
         "text": "You tell the passerby that you already have a full party, and he walks away.",
         "move": "scene4"
     },
