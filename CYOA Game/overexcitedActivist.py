@@ -35,23 +35,26 @@ def messagePrinter(message):
         time.sleep(writeDelay)
     print()
 
-#Setting keybinds and interacting with the player
+#Setting keybinds and interacting with the player's responses
 def keyBindHandler():
-    global inventoryBind, healthBind
+    global inventoryBind, healthBind #Accessing the global variables to change them
     response = input("Change key bindings? (y/n)").lower()
-    while response != "y" and response != "n":
+    while response != "y" and response != "n": #Checking if the response is either y or n
         messagePrinter("Please enter a valid response.")
         response = input("Change key bindings? (y/n)").lower()
-    if response == "y":
+
+    if response == "y": #Checking if the user wants to change the keybinds
         inventoryBind = input("Inventory: ")
-        while inventoryBind in ["1", "2", "3", "4", ""]:
+
+        #Making sure the keybinds are unique of each other and important options
+        while inventoryBind in ["1", "2", "3", "4", "", "True", "False"]:
             messagePrinter(f"[{inventoryBind}] is already bound to an option, please choose another key.")
             inventoryBind = input("Inventory: ")
         healthBind = input("Health: ")
-        while healthBind in ["1", "2", "3", "4", "", inventoryBind]:
+        while healthBind in ["1", "2", "3", "4", "", "True", "False", inventoryBind]:
             if healthBind == inventoryBind:
                 messagePrinter(f"[{inventoryBind}] is already bound to inventory, please choose another key.")
-            elif healthBind in ["1", "2", "3", "4"]:
+            elif healthBind in ["1", "2", "3", "4", "", "True", "False"]:
                 messagePrinter(f"[{healthBind}] is already bound to an option, please choose another key.")
             healthBind = input("Health: ")
         messagePrinter("Key bindings have been changed, your new key bindings are:")
