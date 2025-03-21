@@ -77,7 +77,7 @@ def boolHandler(sceneKey):
             displayScene(scenes[scene])
         elif choice == 'n':
             scene = f"{scene}-False"
-            displayScene(scene)
+            displayScene(scenes[scene])
         else:
             print("Please input either y/n.")
             boolHandler(sceneKey)
