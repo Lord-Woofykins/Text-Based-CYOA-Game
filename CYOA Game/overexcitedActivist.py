@@ -29,28 +29,62 @@ spaceDelayMultiplier = 1.1
 def challengeSpeechContest():
     messagePrinter("Threadit            r/Politics")
     username = inputHandler("Choose your username: ")
+    print()
+    messagePrinter("Threadit            r/Politics")
     messagePrinter(f"{username}: I hate cheese! #CheeseIsBad")
+    messagePrinter("| 1. Upvote (21) | 2. Downvote (7) | 3. Comments (4) |")
+    print()
 
+    messagePrinter("Comments:")
+    messagePrinter("1. I agree, cheese is the worst!")
+    messagePrinter("2. I'm chonky and like cheese, but I respect your opinion.")
+    messagePrinter("3. u/CheeseVigilante42: Oh. Oh, you hate cheese? You just wake up in the morning and decide to be objectively wrong? CHEESE IS THE BACKBONE OF SOCIETY. You think you’re better than the entirety of France? THAN THE GRANDMA IN ITALY HANDMAKING MOZZARELLA RIGHT NOW? I bet your fridge is just air and despair. #CheeseIsLife")
 
-
-    messagePrinter("Speech Contest" + "\n" + "Write the best speech (angriest) speech possible!")
+    messagePrinter("1 reply:")
+    response = inputHandler("Open? (y/n) ")
+    if response == "y":
+        messagePrinter("u/Chonky: I hope you choke on a cracker. I hope you get a paper cut on your tongue. I hope you step on a lego. I hope you get a splinter under your fingernail. I hope you get a popcorn kernel stuck in the back of your throat. I hope you get a blister. I hope you get a pimple in your ear. I hope you get a mosquito bite on your eyelid. I hope you get a sunburn on your scalp. I hope you get a cramp in your foot. I hope you get a headache. I hope you get a stomach ache. I hope you get a toothache. I hope you get a brain freeze.")
     print()
     
-    speech = input("Speech: ")
+    messagePrinter("Speech Contest!" + "\n" + "Write the best (angriest) speech possible!")
+    print()
+    
     speechScore = 0
-    if len(speech.split()) < 50:
+    speech = input("Speech: ")
+    #Scoring added for length
+    if len(speech.split()) > 50:
+        speechScore += 2
+    elif len(speech.split()) >= 30:
         speechScore += 1
-    if "cheese" in speech.lower():
-        speechScore += 1
-    
-    
-
-
-
-
-
-
-
+    #Scoring added for keywords
+    keywords = ["cheese", "hate", "anger", "rage", "disgust", "pooky", "france", "italy", "mozzarella", "grandma", "backbone", "society", "wrong", "despair", "life"]
+    for keyword in keywords:
+        if keyword in speech.lower():
+            speechScore += 1
+    speechScore += speech.count("!") + speech.count("?") #Scoring added for punctuation
+        
+    if speechScore < 6:
+        messagePrinter("u/CheeseVigilante42: And THERE IT IS, folks! He crumbles.")
+        if len(speech.split()) < 30:
+            messagePrinter("u/CheeseVigilante42: Imagine not even bothering to write a proper length comeback.")
+        elif "cheese" not in speech.lower():
+            messagePrinter("u/CheeseVigilante42: Didn't even mention cheese.")
+        elif speech.count("!") == 0:
+            messagePrinter("u/CheeseVigilante42: No exclamation points? No ALL CAPS? No insults? You call that a speech?")
+        elif speech.count("?") == 0:
+            messagePrinter("u/CheeseVigilante42: No rhetorical questions? No insults? You call that a speech?")
+        elif len(speech.split()) < 50:
+            messagePrinter("u/CheeseVigilante42: Could've spent more time on that one instead of rage quitting.")
+        print()
+        messagePrinter("You have lost the speech contest. Words hurt.")
+        response = inputHandler("Try again? (y/n) ")
+        while response != "y" and response != "n":
+            response = inputHandler("Try again? (y/n) ")
+        if response == "n":
+            global scene 
+            scene = "end"
+        else:
+            challengeSpeechContest()
 
 
 # Print messages with a delay between letters
@@ -152,6 +186,10 @@ def displayScene(sceneKey):
 
     elif "move" in sceneKey: #Move to the next scene
         moveScene(sceneKey)
+    
+    elif "challengeSpeech" in sceneKey:
+        messagePrinter(sceneKey["challengeSpeech"])
+        challengeSpeechContest()
     
 
 
