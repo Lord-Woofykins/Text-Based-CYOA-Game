@@ -86,7 +86,10 @@ scenes = {
     },
 
     #Scene 3A
-
+    "scene3A": {
+        "text": "A political party offers you the chance of a lifetime to join their legions as a proud supporter. However, hours of scrolling TikTok have given you a better idea. You decide to join as a double agent, bent on exposing their corruption.",
+        "move": "scene3A-1"
+    },
 
     #Scene 3B
     "scene3B": {

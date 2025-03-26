@@ -63,7 +63,7 @@ def challengeSpeechContest():
             speechScore += 1
     speechScore += speech.count("!") + speech.count("?") #Scoring added for punctuation
         
-    if speechScore < 6:
+    if speechScore < 5:
         messagePrinter("u/CheeseVigilante42: And THERE IT IS, folks! He crumbles.")
         if len(speech.split()) < 30:
             messagePrinter("u/CheeseVigilante42: Imagine not even bothering to write a proper length comeback.")
@@ -85,6 +85,11 @@ def challengeSpeechContest():
             scene = "end"
         else:
             challengeSpeechContest()
+    else:
+        messagePrinter("u/CheeseVigilante42: FINE, I'LL ADDRESS THE ELEPHANT IN THE ROOM" + "\n" + "I'm the VICTIM here. Do you know how many alt accounts I've been banned from? SEVENTEEN. All because I dared to speak the TRUTH about cheese. MY LAWYER WILL BE IN TOUCH. *Proceeds to dramatically delete reddit account*")
+        global scene
+        scene = "scene3A"
+        displayScene(scenes[scene])
 
 
 # Print messages with a delay between letters
