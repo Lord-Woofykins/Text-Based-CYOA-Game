@@ -5,6 +5,14 @@ from storyText import scenes
 # Clear the terminal 
 os.system("clear")
 
+# ANSI Colour Codes
+RED = "\033[91m"
+GREEN = "\033[92m"
+YELLOW = "\033[93m"
+BLUE = "\033[94m"
+END = "\033[0m"
+
+
 # Stats
 itemTypes = {
     "weapon": ["screwdriver"],
@@ -27,6 +35,7 @@ spaceDelayMultiplier = 1.1
 # Functions below this point
 
 def challengeSpeechContest():
+    global scene
     messagePrinter("Threadit            r/Politics")
     username = inputHandler("Choose your username: ")
     print()
@@ -52,20 +61,22 @@ def challengeSpeechContest():
     speechScore = 0
     speech = input("Speech: ")
     #Scoring added for length
-    if len(speech.split()) > 50:
+    if len(speech) > 150:
         speechScore += 2
-    elif len(speech.split()) >= 30:
+    elif len(speech) > 60:
+        speechScore += 2
+    elif len(speech) >= 20:
         speechScore += 1
     #Scoring added for keywords
-    keywords = ["cheese", "hate", "anger", "rage", "disgust", "pooky", "france", "italy", "mozzarella", "grandma", "backbone", "society", "wrong", "despair", "life"]
+    keywords = ["cheese", "hate", "anger", "rage", "disgust", "pooky", "france", "italy", "mozzarella", "grandma", "backbone", "society", "wrong", "despair", "life", "vigilante", ]
     for keyword in keywords:
         if keyword in speech.lower():
             speechScore += 1
-    speechScore += speech.count("!") + speech.count("?") #Scoring added for punctuation
+    speechScore += speech.count("!") + speech.count("?") + speech.count(".") + speech.count(",") #Scoring added for punctuation
         
-    if speechScore < 5:
+    if speechScore < 4:
         messagePrinter("u/CheeseVigilante42: And THERE IT IS, folks! He crumbles.")
-        if len(speech.split()) < 30:
+        if len(speech) < 10:
             messagePrinter("u/CheeseVigilante42: Imagine not even bothering to write a proper length comeback.")
         elif "cheese" not in speech.lower():
             messagePrinter("u/CheeseVigilante42: Didn't even mention cheese.")
@@ -73,7 +84,7 @@ def challengeSpeechContest():
             messagePrinter("u/CheeseVigilante42: No exclamation points? No ALL CAPS? No insults? You call that a speech?")
         elif speech.count("?") == 0:
             messagePrinter("u/CheeseVigilante42: No rhetorical questions? No insults? You call that a speech?")
-        elif len(speech.split()) < 50:
+        elif len(speech.split()) < 30:
             messagePrinter("u/CheeseVigilante42: Could've spent more time on that one instead of rage quitting.")
         print()
         messagePrinter("You have lost the speech contest. Words hurt.")
@@ -81,13 +92,13 @@ def challengeSpeechContest():
         while response != "y" and response != "n":
             response = inputHandler("Try again? (y/n) ")
         if response == "n":
-            global scene 
             scene = "end"
         else:
             challengeSpeechContest()
     else:
         messagePrinter("u/CheeseVigilante42: FINE, I'LL ADDRESS THE ELEPHANT IN THE ROOM" + "\n" + "I'm the VICTIM here. Do you know how many alt accounts I've been banned from? SEVENTEEN. All because I dared to speak the TRUTH about cheese. MY LAWYER WILL BE IN TOUCH. *Proceeds to dramatically delete reddit account*")
-        global scene
+        if speechScore > 8:
+            messagePrinter("The mods of the thread have given you money to help you out of the debt that you must be because of the job that you must've lost in sacrifice of the time taken to write that speech.")
         scene = "scene3A"
         displayScene(scenes[scene])
 
@@ -171,6 +182,7 @@ def optionHandler(sceneKey):
 
 # Display the current scene and its options
 def displayScene(sceneKey):
+    os.system("clear")
     messagePrinter(sceneKey["text"]) #Displaying the text of the scene
     if "item" in sceneKey: #Adding any items to the inventory
         inventory.append(sceneKey["item"])
@@ -190,6 +202,7 @@ def displayScene(sceneKey):
         boolHandler(sceneKey)
 
     elif "move" in sceneKey: #Move to the next scene
+        inputHandler("")
         moveScene(sceneKey)
     
     elif "challengeSpeech" in sceneKey:
