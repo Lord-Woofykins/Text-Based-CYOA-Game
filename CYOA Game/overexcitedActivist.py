@@ -12,7 +12,6 @@ YELLOW = "\033[93m"
 BLUE = "\033[94m"
 END = "\033[0m"
 
-
 # Stats
 itemTypes = {
     "weapon": ["screwdriver"],
@@ -104,11 +103,11 @@ def challengeSpeechContest():
 
 
 # Print messages with a delay between letters
-def messagePrinter(message):
+def messagePrinter(message, currentColour=END):
     for letter in message:
         if letter == " ":
             time.sleep(writeDelay + writeDelay * spaceDelayMultiplier)    
-        print(letter, end="", flush=True)
+        print(currentColour + letter, end="", flush=True)
         time.sleep(writeDelay)
     print()
 
