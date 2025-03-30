@@ -131,11 +131,19 @@ scenes = {
         "challengeFight": "You get up and make towards them, however as they turn towards you a realisation comes over you that there's no going back now."
     },
     "scene4B-1": {
+        "text": ["You lose, health depleted you are rushed to hospital. It was at this moment that you realised that Australia just abolished medicare because the internet said “it wastes too much money”"],
+        "boolMoney": "Pay up? (y/n) "
+    },
+    "scene4B-True": {
+        "text": ["Luckily, you could afford healthcare, but it cost all of your money. Unfortunately what you find out when you get out of hospital makes you sick to your stomach."],
+        "move": "scene5B"
+    },
+    "scene4B-2": {
         "text": ["You have defeated the nimby, and the crowd cheers. Looking at the fallen nimby, you feel a sense of satisfaction, but also a twinge of guilt. In their coat pocket, you find a wallet. You take it before handing him over to the ambulance."],
         "item": "wallet",
         "move": "scene5B"
     },
-    "scene4B-2": {
+    "scene4B-3": {
         "text": ["You have won the fight, but at what cost?."],
         "move": "scene5B"
     },

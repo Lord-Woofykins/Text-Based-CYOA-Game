@@ -267,13 +267,12 @@ def challengeFight(attack):
 
     #Ending the fight
     if playerHealth <= 0: #Checking if the player has died
-        messagePrinter("You have died.")
-        scene = "end"
-    elif oppHealth <= 0: #Checking if the opponent has died
         scene = f"{scene}-1"
+    elif oppHealth <= 0: #Checking if the opponent has died
+        scene = f"{scene}-2"
         displayScene(scenes[scene])
     elif fightStatus == 'dead': #Checking if the opponent has fled
-        scene = f"{scene}-2"
+        scene = f"{scene}-3"
         displayScene(scenes[scene])
     
 
@@ -403,6 +402,19 @@ def displayScene(sceneKey):
 
     elif "bool" in sceneKey: #Checking if there is a boolean to choose from
         boolHandler(sceneKey)
+
+    elif "boolMoney" in sceneKey: #Checking if there is an item unlockable event to choose from
+        if "wallet" in inventory or "briefcase" in inventory:
+            inputHandler(sceneKey["boolMoney"])
+            if "wallet" in inventory:
+                inventory.remove("wallet")
+            elif "briefcase" in inventory:
+                inventory.remove("briefcase")
+            scene = f"{scene}-True"
+            displayScene(scenes[scene])
+        else:
+            messagePrinter("You don't have any money to give, so you end up dying in the hospital.", RED)
+            scene = "end"
 
     elif "move" in sceneKey: #Move to the next scene
         inputHandler("")
