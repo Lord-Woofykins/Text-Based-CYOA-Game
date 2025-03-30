@@ -91,6 +91,18 @@ scenes = {
         "text": ["A political party offers you the chance of a lifetime to join their legions as a proud supporter. However, hours of scrolling TikTok have given you a better idea. You decide to join as a double agent, bent on exposing their corruption."],
         "move": "scene3A-1"
     },
+    "scene3A-1": {
+        "text": ["You join their party under the facade of an active citizen who wants the best for the party’s values. One day, upon promotion to the big leagues of the party, you walk into the senior office to notice a poster on the wall: A citizen may not injure a senior being or, through inaction, allow a senior being to come to harm. A citizen must obey the orders given it by senior beings except where such orders would conflict with the First Law. A citizen must protect its own existence as long as such protection does not conflict with the First or Second Law."],
+        "bool": "Ignore the poster? (y/n) "
+    },
+    "scene3A-1-True": {
+        "text": ["Further into the office, you notice an unlocked computer that is sitting inconspicuousky, such that only someone looking for anything ot of the ordinary would find it. Written on the monitor screen, a google maps location of a factory is open, alongside the words: 'Secret environmentally non-compliant factory protected by major donors'"],
+        "move": "scene5B-2"
+    },
+    "scene3A-1-False": {
+        "text": ["As you think about it, the place that you have been working in does seem kind of like a factory. You think back to all of the oddities that you overlooked over your time with the party. All of the 'favours' that the party had you do."],
+        "move": "scene7B"
+    },
 
     #Scene 3B
     "scene3B": {
