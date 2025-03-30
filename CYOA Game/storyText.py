@@ -70,7 +70,7 @@ scenes = {
             "option1": "Recycling",
             "option2": "Renewables",
             "option3": "Replace coal with nuclear",
-            "optionText": "What will you pick?"
+            "optionText": "What will you pick? (1-3) "
         }
     },
     "scene2-2-1": {
@@ -95,7 +95,7 @@ scenes = {
     #Scene 3B
     "scene3B": {
         "text": ["While setting up, a passer by starts bugging you to let him join. However, you already have a full party. Kick out your best friend for him?"],
-        "bool": "Kick out best friend?"
+        "bool": "Kick out best friend? (y/n)"
     },
     "scene3B-True": {
         "text": ["Your friend is super mad, and grumbles to himself about how he should’ve stayed at uni instead of joining you. He will remember this."],
@@ -128,6 +128,6 @@ scenes = {
     #Scene 4B
     "scene4B": {
         "text": ["You continue to set up, and together with your friend begin your “peaceful” protest. While you are chanting on your megaphone, a nimby shows up and initiates a fight."],
-        "challengeFight": "You get up and make towards them and realise that there's no going back now as they turn towards you."
+        "challengeFight": "You get up and make towards them, however as they turn towards you a realisation comes over you that there's no going back now."
     },
 }

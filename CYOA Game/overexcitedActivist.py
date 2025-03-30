@@ -106,7 +106,7 @@ def challengeSpeechContest():
 
 #This is the function where the fight scene plays out
 #In the fight, there are two main stats to keep track of: the status of the opposition and their health, these deeply effect the outcomes and available options
-def challengeFight():
+def challengeFight(attack):
     global scene, playerHealth
     oppHealth = 80
     oppAttack = 10
@@ -230,19 +230,19 @@ def challengeFight():
         
         elif response == 4: #Fleeing causes the player to lose extra health
             messagePrinter("You fail and fall to a critical strike from the nimby.", RED)
-            playerHealth -= (oppAttack * 2)
+            playerHealth -= int(oppAttack * 2)
             fightStatus = 'alert'
         
         elif response == 5: #Choosing to ignore the opponent
             if not ignored:
                 messagePrinter("The audience gasps as you turn away from the nimby, raising your megaphone to continue your speech.",)
-                inputHandler() #Requesting input to act as a break to read between text
+                inputHandler('') #Requesting input to act as a break to read between text
                 messagePrinter("Turns out you were playing 5D chess all along, and as the nimby goes to strike you the horribly mistime it and somehow fall off of the stage.", GREEN)
-                oppHealth = oppHealth/2
+                oppHealth = int(oppHealth/2)
                 ignored = True
             else:
                 messagePrinter("You go too far. The nimby lands a critical strike.", RED)
-                playerHealth -= (oppAttack * 2)
+                playerHealth -= int(oppAttack * 2)
 
         else:
             messagePrinter("Entering an invalid integer caused the opponent to gain a free attack.", RED)
@@ -250,6 +250,7 @@ def challengeFight():
         #The opponent's turn
         print() #Print statement to decrease visual congestion of the terminal
         if fightStatus == 'stunned':
+            fightStatus = 'alert'
             continue
         elif fightStatus == 'alert':
             if random.randint(0, 1) == 0:
@@ -257,10 +258,12 @@ def challengeFight():
                 playerHealth -= oppAttack
             else:
                 oppHeal = random.randint(0, 15)
+                oppHealth += oppHeal
                 messagePrinter(f"They regain {oppHeal} health.")
         elif fightStatus == 'angry':
             messagePrinter("The nimby strikes with all their might, venting their anger.")
             playerHealth -= int(oppAttack * 1.2)
+            fightStatus = 'alert'
 
         
 
@@ -270,9 +273,9 @@ def challengeFight():
 #Generates an integer response
 def integerResponseGenerator():
     response = 0
-    while response != 0:
+    while response == 0:
         try:
-            response = int(inputHandler())
+            response = int(inputHandler(''))
         except ValueError:
             messagePrinter("Please enter a number.")
             response = 0
@@ -289,11 +292,11 @@ def messagePrinter(message, currentColour=END):
 
 #Setting keybinds and interacting with the player's responses
 def keyBindHandler():
-    global inventoryBind, playerHealthBind #Accessing the global variables to change them
-    response = input("Change key bindings? (y/n)").lower()
+    global inventoryBind, playerHealthBind, playerHealth #Accessing the global variables to change them
+    response = input("Change key bindings? (y/n) ").lower()
     while response != "y" and response != "n": #Checking if the response is either y or n
         messagePrinter("Please enter a valid response.")
-        response = input("Change key bindings? (y/n)").lower()
+        response = input("Change key bindings? (y/n) ").lower()
 
     if response == "y": #Checking if the user wants to change the keybinds
         inventoryBind = input("Inventory: ")
@@ -417,6 +420,7 @@ def displayScene(sceneKey):
                 else:
                     print("Please input either y/n.")
         else:
+            response = inputHandler('')
             scene = f"{scene}-3"
             displayScene(scenes[scene])
     
@@ -426,7 +430,7 @@ def displayScene(sceneKey):
     
     elif "challengeFight" in sceneKey:
         messagePrinter(sceneKey["challengeFight"])
-        challengeFight()
+        challengeFight(attack)
     
 
 
@@ -443,10 +447,10 @@ def inputHandler(inputText):
             print()
         else:
             messagePrinter("Inventory is empty.")
-        inputHandler(inputText)
+        response = inputHandler(inputText)
     elif response == playerHealthBind: #Showing health
         messagePrinter(f"Health: {playerHealth}")
-        inputHandler(inputText)
+        response = inputHandler(inputText)
 
     return response #Returning a response to be used by functions such as optionHandler or boolHandler
 
