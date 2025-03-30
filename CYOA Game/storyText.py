@@ -254,11 +254,10 @@ scenes = {
 
     #Scene 8B
     "scene8B": {
-        "text": "A nuclear reactor blows up, and since they were all in such close proximity, a chain reaction happens."
+        "text": "A nuclear reactor blows up, and since they were all in such close proximity, a chain reaction happens.",
+        #Peacefull ending
+        "peacefullEnding": "You declare yourself the leader of a self proclaimed eco-state. Far away from the city, the nuclear meltdown doesn’t effect you and your group of survivors. Everyone lives in the forest, entirely off the grid in your green utopia. Zero carbon emissions required.",
+        #Government bunker ending
+        "mainEnding": "Acid rain falls overhead as the streets are showered in nuclear waste. The smoke in the air makes it difficult to breath as you run to the government bunker specifically made for this purpose under Parliament House. You ignore the fact that millions of lives are to perish any second as the lid of the bunker seals shut. But hey, if there’s no-one alive to create the carbon emissions, you got what you wanted after all. Right? Go you!"
     },
-    #Peacefull ending
-    "peacefullEnding": "You declare yourself the leader of a self proclaimed eco-state. Far away from the city, the nuclear meltdown doesn’t effect you and your group of survivors. Everyone lives in the forest, entirely off the grid in your green utopia. Zero carbon emissions required.",
-    #Government bunker ending
-    "mainEnding": "Acid rain falls overhead as the streets are showered in nuclear waste. The smoke in the air makes it difficult to breath as you run to the government bunker specifically made for this purpose under Parliament House. You ignore the fact that millions of lives are to perish any second as the lid of the bunker seals shut. But hey, if there’s no-one alive to create the carbon emissions, you got what you wanted after all. Right? Go you!"
-
 }
