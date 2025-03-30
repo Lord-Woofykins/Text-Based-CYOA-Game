@@ -425,7 +425,7 @@ def optionHandler(sceneKey):
 
 # Display the current scene and its options
 def displayScene(sceneKey):
-    global scene, countrysideEnding, nuclearVolatility
+    global scene, countrysideEnding, nuclearVolatility, playerHealth
     os.system("clear")
 
     if len(sceneKey["text"]) > 1: #Checking if there are parameters (colour) added to the text
@@ -578,7 +578,7 @@ def intro():
     os.system("clear")
 
 # Game Loop
-scene = "scene7B" #Set the starting scene
+scene = "scene1" #Set the starting scene
 intro() #Call into to the game
 while scene != "end":
     displayScene(scenes[scene])
