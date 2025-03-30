@@ -33,6 +33,7 @@ scenes = {
     },
     "scene1-4": {
         "text": ["You decide to take a walk outside, and as you walk through the park, you see a group of people gathered together, holding signs and chanting slogans. You are intrigued, and you decide to join them. You feel a sense of belonging and purpose as you march with the group, someone even offered you a sandwich, and you realize that you have found your calling as an activist."],
+        "item": "sandwich",
         "move": "scene2"
     },
     
