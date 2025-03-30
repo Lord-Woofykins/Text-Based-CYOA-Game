@@ -102,7 +102,21 @@ scenes = {
         "move": "scene3-True-1"
     },
     "scene3B-False": {
-        "text": "You tell the passerby that you already have a full party, and he walks away.",
-        "move": "scene4"
+        "text": "You tell the passerby that you already have a full party. He shows you a briefcase of cash, before turning to walk away.",
+        "opportunity": ["screwdriver", "Stab and rob him with the screwdriver? (y/n)"]
     },
+    "scene3B-False-1": {
+        "text": "You are successful in your plight, and gain thousands of dollars. Unfortunartely, your ltt screwdriver is broken. Linus will remember this.",
+        "item": "briefcase",
+        "removeItem": "screwdriver",
+        "move": "scene4B"
+    },
+    "scene3B-False-2": {
+        "text": "You are unsuccessful in your plight, and the passerby is furious. Your screwdriver is stolen by the man.",
+        "removeItem": "screwdriver",
+        "move": "scene3B-False-3"
+    },
+    "scene3B-False-3": {
+
+    }
 }
