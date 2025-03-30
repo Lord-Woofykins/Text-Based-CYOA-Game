@@ -186,7 +186,8 @@ def displayScene(sceneKey):
     os.system("clear")
 
     if len(sceneKey["text"]) > 1: #Checking if there are parameters (colour) added to the text
-        messagePrinter(sceneKey["text"][0], sceneKey["text"][1])
+        colour = globals().get(sceneKey["text"][1], END)  # Get the color code from the global variables
+        messagePrinter(sceneKey["text"][0], colour)
     else:
         messagePrinter(sceneKey["text"][0]) #Displaying the text of the scene
 

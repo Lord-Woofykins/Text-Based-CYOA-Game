@@ -1,7 +1,7 @@
 scenes = {
     #Scene 1
     "scene1": {
-        "text": ["You wake up in a small rental unit, your little abode where you have been forced to retreat to after your parents kicked you from their home."],
+        "text": ["You wake up in a small rental unit, your little abode where you have been forced to retreat to after your parents kicked you from their home.", "BLUE"],
         "options": {
             "option1": "Get out of bed and look around",
             "option2": "Stay in bed",
@@ -112,11 +112,13 @@ scenes = {
         "move": "scene4B"
     },
     "scene3B-False-2": {
-        "text": ["You are unsuccessful in your plight, and the passerby is furious. Your screwdriver is stolen by the man."],
+        "text": ["You are unsuccessful in your plight, and the passerby is furious. Your screwdriver is stolen by the man, and you are slightly hurt.", "RED"],
         "removeItem": "screwdriver",
+        "health": -20,
         "move": "scene3B-False-3"
     },
     "scene3B-False-3": {
-
+        "text": ["The man gets away, but that’s ok because after all it’s all about the friends we made along the way."],
+        "move": "scene4B"
     }
 }
