@@ -525,6 +525,13 @@ def displayScene(sceneKey):
         messagePrinter(sceneKey["challengeMeltdown"])
         challengeMeltdown(nuclearVolatility)
     
+    elif "peacefullEnding" in sceneKey:
+        if countrysideEnding == True:
+            messagePrinter(sceneKey["peacefullEnding"])
+        else:
+            messagePrinter(sceneKey["mainEnding"])
+        sceneKey = "end"
+    
 
 
 #Handle general inputting from the user
