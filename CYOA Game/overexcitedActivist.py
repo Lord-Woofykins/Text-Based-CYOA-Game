@@ -424,6 +424,10 @@ def displayScene(sceneKey):
         messagePrinter(sceneKey["challengeSpeech"])
         challengeSpeechContest()
     
+    elif "challengeFight" in sceneKey:
+        messagePrinter(sceneKey["challengeFight"])
+        challengeFight()
+    
 
 
 #Handle general inputting from the user
