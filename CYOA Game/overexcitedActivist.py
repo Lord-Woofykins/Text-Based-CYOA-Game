@@ -321,7 +321,7 @@ def challengeSneak(stealth):
 
 #Function handling the nuclear meltdown challenge
 #The challenge is made purposefully easy to put emphasis on the useer making their own decision to pursue this nuclear narrative
-def challengeMeltdown(nuclearVolatility):
+def challengeMeltdown(sceneKey, nuclearVolatility):
     global scene
     response = inputHandler("Prevent the meltdown. Hint: Type 'calm' the required number of times. ")
     calmCount = 0
@@ -330,8 +330,10 @@ def challengeMeltdown(nuclearVolatility):
             calmCount += 1
     if calmCount < nuclearVolatility ** 2:  # Use ** for exponentiation in Python
         scene = "scene8B"
+        displayScene(scenes[scene])
     else:
-        scene = "scene7B-Success"
+        scene = f"{scene}-1"
+        displayScene(scenes[scene])
 
 #Generates an integer response
 def integerResponseGenerator():
@@ -423,7 +425,7 @@ def optionHandler(sceneKey):
 
 # Display the current scene and its options
 def displayScene(sceneKey):
-    global scene
+    global scene, countrysideEnding, nuclearVolatility
     os.system("clear")
 
     if len(sceneKey["text"]) > 1: #Checking if there are parameters (colour) added to the text
@@ -523,14 +525,14 @@ def displayScene(sceneKey):
     
     elif "challengeMeltdown" in sceneKey:
         messagePrinter(sceneKey["challengeMeltdown"])
-        challengeMeltdown(nuclearVolatility)
+        challengeMeltdown(sceneKey, nuclearVolatility)
     
     elif "peacefullEnding" in sceneKey:
         if countrysideEnding == True:
             messagePrinter(sceneKey["peacefullEnding"])
         else:
             messagePrinter(sceneKey["mainEnding"])
-        sceneKey = "end"
+        scene = "end"
     
 
 

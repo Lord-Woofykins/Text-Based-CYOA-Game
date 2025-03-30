@@ -266,7 +266,7 @@ scenes = {
 
     #Scene 8B
     "scene8B": {
-        "text": "A nuclear reactor blows up, and since they were all in such close proximity, a chain reaction happens.",
+        "text": ["A nuclear reactor blows up, and since they were all in such close proximity, a chain reaction happens."],
         #Peacefull ending
         "peacefullEnding": "You declare yourself the leader of a self proclaimed eco-state. Far away from the city, the nuclear meltdown doesn’t effect you and your group of survivors. Everyone lives in the forest, entirely off the grid in your green utopia. Zero carbon emissions required.",
         #Government bunker ending
