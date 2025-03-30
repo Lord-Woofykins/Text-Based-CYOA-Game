@@ -323,16 +323,15 @@ def challengeSneak(stealth):
 #The challenge is made purposefully easy to put emphasis on the useer making their own decision to pursue this nuclear narrative
 def challengeMeltdown(nuclearVolatility):
     global scene
-    response = inputHandler("Prevent the nuclear power plant from blowng up. Hint: Required calming corresponds to nuclear volatility squared. ")
+    response = inputHandler("Prevent the meltdown. Hint: Type 'calm' the required number of times. ")
     calmCount = 0
-    for "calm" in response.lower().split():
-        calmCount += 1
-    if calmCount < nuclearVolatility^nuclearVolatility:
+    for word in response.lower().split():
+        if word == "calm":
+            calmCount += 1
+    if calmCount < nuclearVolatility ** 2:  # Use ** for exponentiation in Python
         scene = "scene8B"
-    
-
-    
-
+    else:
+        scene = "scene7B-Success"
 
 #Generates an integer response
 def integerResponseGenerator():

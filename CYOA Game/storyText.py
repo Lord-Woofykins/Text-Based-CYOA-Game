@@ -223,43 +223,43 @@ scenes = {
         "text": ["The government is so proud of your work and effort that they elect you as environment minister for Australia, and so you decide to listen to Peter Dutton. Australia becomes a leading country in nuclear power."],
         "bool": "This is what you always wanted, right? (y/n)",
     },
-    "scene7B-True": {
+    "scene7B-1-True": {
         "text": ["Isn’t this what you always wanted? You go along with the building of nuclear plants. Despite intense lobbying from the coal and gas companies, they end up closing down as intense US backed subsidies drive all energy competition out of the market."],
-        "move": "scene7B-True-1"
+        "move": "scene7B-1-True-1"
     },
-    "scene7B-False": { 
+    "scene7B-1-False": { 
         "text": ["You have a change of heart. You see the error in your ways and decide to flee the city before it’s too late."],
         "countrysideEnding": True,
         "move": "scene8B"
     },
-    "scene7B-True-1": {
+    "scene7B-1-True-1": {
         "text": ["All is well and good, because this is what you wanted, right? Nuclear volatility increased by 1"],
         "nuclearVolatility": 1,
-        "move": "scene7B-True-2"
+        "move": "scene7B-1-True-2"
     },
-    "scene7B-True-2": {
+    "scene7B-1-True-2": {
         "text": ["Nuclear meltdown is imminent provide calming words to cool it down!!!!!"],
         "challengeMeltdown": "Write 'calm' as many times as you can!",
     },
-    "scene7B-True-2-1": {
+    "scene7B-1-True-2-1": {
         "text": ["Issue resolved. Signs of rebellion are beginning to show, but its all good because this is what you always wanted. Nuclear volatility increased by 1"],
         "nuclearVolatility": 1,
-        "move": "scene7B-True-2-2"
+        "move": "scene7B-1-True-2-2"
     },
-    "scene7B-True-2-2": {
+    "scene7B-1-True-2-2": {
         "text": ["Nuclear meltdown is imminent provide calming words to cool it down!!!!!"],
         "challengeMeltdown": "Write 'calm' as many times as you can!",
     },
-    "scene7B-True-2-2-1": {
+    "scene7B-1-True-2-2-1": {
         "text": ["No problem, your quick thinking save the day yet again. It seems as though you were made for this job, right? Sitting around, doing nothing but approving nuclear proposals. Nuclear volatility increased by 1"],
         "nuclearVolatility": 1,
-        "move": "scene7B-True-2-2-2"
+        "move": "scene7B-1-True-2-2-2"
     },
-    "scene7B-True-2-2-2": {
+    "scene7B-1-True-2-2-2": {
         "text": ["Nuclear meltdown is imminent provide calming words to cool it down!!!!!"],
         "challengeMeltdown": "Write 'calm' as many times as you can!",
     },
-    "scene7B-True-2-2-2-1": {
+    "scene7B-1-True-2-2-2-1": {
         "text": ["This must’ve just been what you always wanted after all. Unless? You hear an odd sound that seems kind of like a siren."],
         "move": "scene8B"
     },
