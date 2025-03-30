@@ -272,6 +272,10 @@ def challengeFight(attack):
     elif oppHealth <= 0: #Checking if the opponent has died
         scene = f"{scene}-1"
         displayScene(scenes[scene])
+    elif fightStatus == 'dead': #Checking if the opponent has fled
+        scene = f"{scene}-2"
+        displayScene(scenes[scene])
+    
 
 #Generates an integer response
 def integerResponseGenerator():

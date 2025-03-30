@@ -135,4 +135,8 @@ scenes = {
         "item": "wallet",
         "move": "scene5B"
     },
+    "scene4B-2": {
+        "text": ["You have won the fight, but at what cost?."],
+        "move": "scene5B"
+    },
 }
