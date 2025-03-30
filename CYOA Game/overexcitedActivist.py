@@ -19,6 +19,7 @@ itemTypes = {
     "money": ["wallet", "briefcase"],
     "food": ["apple", "sandwich"],
 }
+foodBonus = 25
 
 inventory = ["apple"]
 playerHealth = 100
@@ -103,29 +104,27 @@ def challengeSpeechContest():
         scene = "scene3A"
         displayScene(scenes[scene])
 
+#This is the function where the fight scene plays out
+#In the fight, there are two main stats to keep track of: the status of the opposition and their health, these deeply effect the outcomes and available options
 def challengeFight():
-    global scene
+    global scene, playerHealth
     oppHealth = 80
     oppAttack = 10
+    ignored = False
     messagePrinter("In the background, a chant can be heard: 'Hit him', 'Hit him', 'Hit him'!")
     messagePrinter("The nimby snarles at you, and spits on the ground.")
     print()
     fightStatus = 'alert'
-    while fightStatus != 'dead':
+    while fightStatus != 'dead' and oppHealth > 0:
         messagePrinter(f"Nimby Stats: Health: {oppHealth} | Attack: {oppAttack} | Status: {fightStatus}")
         messagePrinter("Options: (1) Attack | (2) Bribe | (3) Use Item | (4) Flee | (5) Ignore")
         print()
         messagePrinter(f"Remember: Press [{inventoryBind}] to see your inventory and [{playerHealthBind}] to see your health!")
 
-        #Getting an integer response
-        response = 0
-        while response != 0:
-            try:
-                response = int(inputHandler())
-            except ValueError:
-                messagePrinter("Please enter a number.")
-                response = 0
+        response = integerResponseGenerator() #Asking for user input
         
+        #The player's turn
+
         #Determining outcome for attack option
         if response == 1:
             if fightStatus == 'stunned':
@@ -152,11 +151,132 @@ def challengeFight():
                 else:
                     messagePrinter("You attempt to hit the nimby, but they manage to dodge just in time.", RED)
                     fightStatus = 'angry'
+        
+        #Determining outcome for bribe option
+        elif response == 2:
+            if len(inventory) > 0:
+                messagePrinter("What do you bribe with?")
+
+                #Displaying inventory with options
+                i = 1
+                for item in inventory:
+                    messagePrinter(f"({i}) {item.upper()}")
+                    i += 1
+                
+                #Requesting a valid integer response
+                response = integerResponseGenerator()
+                while response not in range(1, len(inventory) + 1):
+                    messagePrinter("Please enter a valid option.")
+                    response = integerResponseGenerator()
+
+                item = inventory[response - 1] #Getting the item from the inventory
+                #Checking the bribe type, and determining the response from the opponent
+                if item in itemTypes["money"]: #Money initiates the greed response from the opponent, causing them to run away and for the fight to end
+                    messagePrinter("You bribe the nimby with money, and they run away.", GREEN)
+                    inventory.remove(item)
+                    fightStatus = 'dead'
+                elif item in itemTypes["weapon"]: #Weaponry angers the opponent
+                    messagePrinter(f"You take out the {item.lower()}, but for some reason the sight of it only makes them angrier. They knock it out of your hand before you can formally offer it.", RED)
+                    inventory.remove(item)
+                    fightStatus = 'angry'
+                elif item in itemTypes["food"]: #The opponent is likely homeless and starving, so offering food stuns them since they didn't expect such kindness
+                    messagePrinter(f"You offer the {item.lower()} to the nimby. They seem confused but take it anyway.", GREEN)
+                    inventory.remove(item)
+                    fightStatus = 'stunned'
+            else: #The player is encouraged to keep track of their stats, because choosing something that they are unable to do negatively impacts them
+                messagePrinter("You don't have anything!")
+                fightStatus = 'alert'
+                continue
+        
+        #Item use function is largely the same, other than different effects and text
+        elif response == 3:
+            if len(inventory) > 0:
+                messagePrinter("What do you use?")
+
+                #Displaying inventory with options
+                i = 1
+                for item in inventory:
+                    messagePrinter(f"({i}) {item.upper()}")
+                    i += 1
+                
+                #Requesting a valid integer response
+                response = integerResponseGenerator()
+                while response not in range(1, len(inventory) + 1):
+                    messagePrinter("Please enter a valid option.")
+                    response = integerResponseGenerator()
+
+                item = inventory[response - 1] #Getting the item from the inventory
+                #Checking the item type, and determining the buff/response
+                if item in itemTypes["money"]:
+                    messagePrinter("Showing the nimby how rich you are only angers them, but it does improve your ego.", YELLOW)
+                    inventory.remove(item)
+                    fightStatus = 'angry'
+                    playerHealth += 10
+                elif item in itemTypes["weapon"]:
+                    messagePrinter(f"Your {item.lower()} instills fear into the nimby, and your attack is buffed.", GREEN)
+                    inventory.remove(item)
+                    fightStatus = 'stunned'
+                    attack += 8
+                elif item in itemTypes["food"]:
+                    messagePrinter(f"You eat the {item.lower()} and gain {foodBonus} health.", GREEN)
+                    inventory.remove(item)
+                    playerHealth += foodBonus
+                    fightStatus = 'alert'
+            
+            else: #Resetting the status of opposition due to ill-chosen option
+                messagePrinter("You don't have anything!", YELLOW)
+                fightStatus = 'alert'
+                continue
+        
+        elif response == 4: #Fleeing causes the player to lose extra health
+            messagePrinter("You fail and fall to a critical strike from the nimby.", RED)
+            playerHealth -= (oppAttack * 2)
+            fightStatus = 'alert'
+        
+        elif response == 5: #Choosing to ignore the opponent
+            if not ignored:
+                messagePrinter("The audience gasps as you turn away from the nimby, raising your megaphone to continue your speech.",)
+                inputHandler() #Requesting input to act as a break to read between text
+                messagePrinter("Turns out you were playing 5D chess all along, and as the nimby goes to strike you the horribly mistime it and somehow fall off of the stage.", GREEN)
+                oppHealth = oppHealth/2
+                ignored = True
+            else:
+                messagePrinter("You go too far. The nimby lands a critical strike.", RED)
+                playerHealth -= (oppAttack * 2)
+
+        else:
+            messagePrinter("Entering an invalid integer caused the opponent to gain a free attack.", RED)
+        
+        #The opponent's turn
+        print() #Print statement to decrease visual congestion of the terminal
+        if fightStatus == 'stunned':
+            continue
+        elif fightStatus == 'alert':
+            if random.randint(0, 1) == 0:
+                messagePrinter("The nimby strikes you.")
+                playerHealth -= oppAttack
+            else:
+                oppHeal = random.randint(0, 15)
+                messagePrinter(f"They regain {oppHeal} health.")
+        elif fightStatus == 'angry':
+            messagePrinter("The nimby strikes with all their might, venting their anger.")
+            playerHealth -= int(oppAttack * 1.2)
+
+        
 
 
 
 
-
+#Generates an integer response
+def integerResponseGenerator():
+    response = 0
+    while response != 0:
+        try:
+            response = int(inputHandler())
+        except ValueError:
+            messagePrinter("Please enter a number.")
+            response = 0
+    return response
 
 # Print messages with a delay between letters
 def messagePrinter(message, currentColour=END):
