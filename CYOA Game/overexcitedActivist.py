@@ -201,6 +201,12 @@ def displayScene(sceneKey):
         inventory.remove(sceneKey["removeItem"])
         messagePrinter(f"A {sceneKey["removeItem"].lower()} has been removed from your inventory.")
 
+    if "health" in sceneKey: #Checking if there is a health change
+        health += sceneKey["health"]
+        if health <= 0: #Checking if the health is less than or equal to 0
+            messagePrinter("You have died.")
+            scene = "end"
+
     if "options" in sceneKey: # Checking if there are options to choose from
         #Displaying the options
         for key, option in sceneKey["options"].items():
