@@ -99,7 +99,7 @@ scenes = {
     },
     "scene3B-True": {
         "text": ["Your friend is super mad, and grumbles to himself about how he should’ve stayed at uni instead of joining you. He will remember this."],
-        "harderPoliticalEnding": True,
+        "harderPoliticalEnding": True, #This is redundant, for if I return to this project in future
         "move": "scene3-True-1"
     },
     "scene3B-False": {
@@ -201,8 +201,7 @@ scenes = {
         "text": ["Bribery always works, well done."],
         "move": "scene7B"
     },
-    #scene7A
-
+    
     #scene7B
     "scene7B": {
         "text": ["What you see shocks you, and after fleeing the facility you leak the classified information, ensuring that the government finds out."],
@@ -218,17 +217,48 @@ scenes = {
     },
     "scene7B-False": { 
         "text": ["You have a change of heart. You see the error in your ways and decide to flee the city before it’s too late."],
+        "countrysideEnding": True,
         "move": "scene8B"
     },
     "scene7B-True-1": {
-        "text": ["All is well and good, because this is what you wanted, right?"],
+        "text": ["All is well and good, because this is what you wanted, right? Nuclear volatility increased by 1"],
         "nuclearVolatility": 1,
         "move": "scene7B-True-2"
     },
     "scene7B-True-2": {
         "text": ["Nuclear meltdown is imminent provide calming words to cool it down!!!!!"],
         "challengeMeltdown": "Write 'calm' as many times as you can!",
-        
     },
+    "scene7B-True-2-1": {
+        "text": ["Issue resolved. Signs of rebellion are beginning to show, but its all good because this is what you always wanted. Nuclear volatility increased by 1"],
+        "nuclearVolatility": 1,
+        "move": "scene7B-True-2-2"
+    },
+    "scene7B-True-2-2": {
+        "text": ["Nuclear meltdown is imminent provide calming words to cool it down!!!!!"],
+        "challengeMeltdown": "Write 'calm' as many times as you can!",
+    },
+    "scene7B-True-2-2-1": {
+        "text": ["No problem, your quick thinking save the day yet again. It seems as though you were made for this job, right? Sitting around, doing nothing but approving nuclear proposals. Nuclear volatility increased by 1"],
+        "nuclearVolatility": 1,
+        "move": "scene7B-True-2-2-2"
+    },
+    "scene7B-True-2-2-2": {
+        "text": ["Nuclear meltdown is imminent provide calming words to cool it down!!!!!"],
+        "challengeMeltdown": "Write 'calm' as many times as you can!",
+    },
+    "scene7B-True-2-2-2-1": {
+        "text": ["This must’ve just been what you always wanted after all. Unless? You hear an odd sound that seems kind of like a siren."],
+        "move": "scene8B"
+    },
+
+    #Scene 8B
+    "scene8B": {
+        "text": "A nuclear reactor blows up, and since they were all in such close proximity, a chain reaction happens."
+    },
+    #Peacefull ending
+    "peacefullEnding": "You declare yourself the leader of a self proclaimed eco-state. Far away from the city, the nuclear meltdown doesn’t effect you and your group of survivors. Everyone lives in the forest, entirely off the grid in your green utopia. Zero carbon emissions required.",
+    #Government bunker ending
+    "mainEnding": "Acid rain falls overhead as the streets are showered in nuclear waste. The smoke in the air makes it difficult to breath as you run to the government bunker specifically made for this purpose under Parliament House. You ignore the fact that millions of lives are to perish any second as the lid of the bunker seals shut. But hey, if there’s no-one alive to create the carbon emissions, you got what you wanted after all. Right? Go you!"
 
 }

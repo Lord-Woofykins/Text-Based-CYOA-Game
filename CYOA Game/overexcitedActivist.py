@@ -26,6 +26,7 @@ stealth = 3
 nuclearVolatility = 0
 foodBonus = 25
 attack = 12
+countrysideEnding = False
 
 # General player stats
 inventory = ["apple"]
@@ -318,12 +319,18 @@ def challengeSneak(stealth):
 
     displayScene(scenes[scene])
 
+#Function handling the nuclear meltdown challenge
+#The challenge is made purposefully easy to put emphasis on the useer making their own decision to pursue this nuclear narrative
 def challengeMeltdown(nuclearVolatility):
     global scene
-    response = inputHandler("Prevent the nuclear power plant from blowng up: ")
-    calmCounter = 0
+    response = inputHandler("Prevent the nuclear power plant from blowng up. Hint: Required calming corresponds to nuclear volatility squared. ")
+    calmCount = 0
     for "calm" in response.lower().split():
-        calmCounter += 1
+        calmCount += 1
+    if calmCount < nuclearVolatility^nuclearVolatility:
+        scene = "scene8B"
+    
+
     
 
 
@@ -447,6 +454,9 @@ def displayScene(sceneKey):
 
     if "nuclearVolatility" in sceneKey: #Checking if there is a nuclear volatility change
         nuclearVolatility += sceneKey["nuclearVolatility"]
+    
+    if "countrysideEnding" in sceneKey:
+        countrysideEnding = True
 
     if "options" in sceneKey: # Checking if there are options to choose from
         #Displaying the options
@@ -560,7 +570,7 @@ def intro():
     os.system("clear")
 
 # Game Loop
-scene = "scene6B" #Set the starting scene
+scene = "scene7B" #Set the starting scene
 intro() #Call into to the game
 while scene != "end":
     displayScene(scenes[scene])
