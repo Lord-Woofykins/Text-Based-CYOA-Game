@@ -184,7 +184,11 @@ def optionHandler(sceneKey):
 def displayScene(sceneKey):
     global scene
     os.system("clear")
-    messagePrinter(sceneKey["text"]) #Displaying the text of the scene
+
+    if len(sceneKey["text"]) > 1: #Checking if there are parameters (colour) added to the text
+        messagePrinter(sceneKey["text"][0], sceneKey["text"][1])
+    else:
+        messagePrinter(sceneKey["text"][0]) #Displaying the text of the scene
 
     #Items
     if "item" in sceneKey: #Adding any items to the inventory
@@ -193,7 +197,8 @@ def displayScene(sceneKey):
         messagePrinter(f"A {sceneKey["item"]} has been added to you inventory!")
     
     if "removeItem" in sceneKey:
-        inventory.remove()
+        inventory.remove(sceneKey["removeItem"])
+        messagePrinter(f"A {sceneKey["removeItem"].lower()} has been removed from your inventory.")
 
     if "options" in sceneKey: # Checking if there are options to choose from
         #Displaying the options
