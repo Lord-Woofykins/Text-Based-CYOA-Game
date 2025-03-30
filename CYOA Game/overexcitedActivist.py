@@ -13,27 +13,34 @@ YELLOW = "\033[93m"
 BLUE = "\033[94m"
 END = "\033[0m"
 
-# Stats
+# Item types
+# These are the types of items that can be used in the game
 itemTypes = {
     "weapon": ["screwdriver"],
     "money": ["wallet", "briefcase"],
     "food": ["apple", "sandwich"],
 }
-foodBonus = 25
-stealth = 3
 
-inventory = ["apple"]
-playerHealth = 100
+# Scene-specific stats
+stealth = 3
+nuclearVolatility = 0
+foodBonus = 25
 attack = 12
 
+# General player stats
+inventory = ["apple"]
+playerHealth = 100
+
+# Keybinds
 inventoryBind = "z"
 playerHealthBind = "x"
 
-# Print statements below this point
-print(os.getcwd())
-
+# Backend variables
 writeDelay = 0.005
 spaceDelayMultiplier = 1.1
+
+# Print statements below this point
+print(os.getcwd())
 
 # Functions below this point
 
@@ -276,8 +283,8 @@ def challengeFight(attack):
         scene = f"{scene}-3"
         displayScene(scenes[scene])
     
-def challengeSneak():
-    global scene, stealth
+def challengeSneak(stealth):
+    global scene
 
     time.sleep(1)
     messagePrinter("Get ready...")
@@ -310,6 +317,15 @@ def challengeSneak():
         scene = f"{scene}-Fail"
 
     displayScene(scenes[scene])
+
+def challengeMeltdown(nuclearVolatility):
+    global scene
+    response = inputHandler("Prevent the nuclear power plant from blowng up: ")
+    calmCounter = 0
+    for "calm" in response.lower().split():
+        calmCounter += 1
+    
+
 
 #Generates an integer response
 def integerResponseGenerator():
@@ -425,6 +441,12 @@ def displayScene(sceneKey):
         if playerHealth <= 0: #Checking if the health is less than or equal to 0
             messagePrinter("You have died.")
             scene = "end"
+    
+    if "stealth" in sceneKey: #Checking if there is a stealth change
+        stealth += sceneKey["stealth"]
+
+    if "nuclearVolatility" in sceneKey: #Checking if there is a nuclear volatility change
+        nuclearVolatility += sceneKey["nuclearVolatility"]
 
     if "options" in sceneKey: # Checking if there are options to choose from
         #Displaying the options
@@ -448,7 +470,7 @@ def displayScene(sceneKey):
             scene = f"{scene}-True"
             displayScene(scenes[scene])
         else:
-            messagePrinter("You don't have any money to give, so you end up dying in the hospital.", RED)
+            messagePrinter(sceneKey["boolMoneyFail"], RED)
             scene = "end"
 
     elif "move" in sceneKey: #Move to the next scene
@@ -488,7 +510,11 @@ def displayScene(sceneKey):
     
     elif "challengeSneak" in sceneKey:
         messagePrinter(sceneKey["challengeSneak"])
-        challengeSneak()
+        challengeSneak(stealth)
+    
+    elif "challengeMeltdown" in sceneKey:
+        messagePrinter(sceneKey["challengeMeltdown"])
+        challengeMeltdown(nuclearVolatility)
     
 
 

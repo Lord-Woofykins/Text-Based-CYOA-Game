@@ -132,7 +132,8 @@ scenes = {
     },
     "scene4B-1": {
         "text": ["You lose, health depleted you are rushed to hospital. It was at this moment that you realised that Australia just abolished medicare because the internet said “it wastes too much money”"],
-        "boolMoney": "Pay up? (y/n) "
+        "boolMoney": "Pay up? (y/n) ",
+        "boolMoneyFail": "You don't have any money to give, so you end up dying in the hospital."
     },
     "scene4B-True": {
         "text": ["Luckily, you could afford healthcare, but it cost all of your money. Unfortunately what you find out when you get out of hospital makes you sick to your stomach."],
@@ -193,6 +194,41 @@ scenes = {
     },
     "scene6B-Fail": {
         "text": ["You are caught by the guard."],
-        "boolMoney": "scene8B"
+        "boolMoney": "scene8B",
+        "boolMoneyFail": "You are sent to jail for a long time."
     },
+    "scene6B-Fail-True": {
+        "text": ["Bribery always works, well done."],
+        "move": "scene7B"
+    },
+    #scene7A
+
+    #scene7B
+    "scene7B": {
+        "text": ["What you see shocks you, and after fleeing the facility you leak the classified information, ensuring that the government finds out."],
+        "move": "scene7B-1"
+    },
+    "scene7B-1": {
+        "text": ["The government is so proud of your work and effort that they elect you as environment minister for Australia, and so you decide to listen to Peter Dutton. Australia becomes a leading country in nuclear power."],
+        "bool": "This is what you always wanted, right? (y/n)",
+    },
+    "scene7B-True": {
+        "text": ["Isn’t this what you always wanted? You go along with the building of nuclear plants. Despite intense lobbying from the coal and gas companies, they end up closing down as intense US backed subsidies drive all energy competition out of the market."],
+        "move": "scene7B-True-1"
+    },
+    "scene7B-False": { 
+        "text": ["You have a change of heart. You see the error in your ways and decide to flee the city before it’s too late."],
+        "move": "scene8B"
+    },
+    "scene7B-True-1": {
+        "text": ["All is well and good, because this is what you wanted, right?"],
+        "nuclearVolatility": 1,
+        "move": "scene7B-True-2"
+    },
+    "scene7B-True-2": {
+        "text": ["Nuclear meltdown is imminent provide calming words to cool it down!!!!!"],
+        "challengeMeltdown": "Write 'calm' as many times as you can!",
+        
+    },
+
 }
