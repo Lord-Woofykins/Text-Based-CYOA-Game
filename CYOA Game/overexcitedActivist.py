@@ -115,7 +115,7 @@ def challengeFight(attack):
     messagePrinter("The nimby snarles at you, and spits on the ground.")
     print()
     fightStatus = 'alert'
-    while fightStatus != 'dead' and oppHealth > 0:
+    while fightStatus != 'dead' and oppHealth > 0 and playerHealth > 0: #Checking if the player or opponent has died
         messagePrinter(f"Nimby Stats: Health: {oppHealth} | Attack: {oppAttack} | Status: {fightStatus}")
         messagePrinter("Options: (1) Attack | (2) Bribe | (3) Use Item | (4) Flee | (5) Ignore")
         print()
@@ -265,10 +265,13 @@ def challengeFight(attack):
             playerHealth -= int(oppAttack * 1.2)
             fightStatus = 'alert'
 
-        
-
-
-
+    #Ending the fight
+    if playerHealth <= 0: #Checking if the player has died
+        messagePrinter("You have died.")
+        scene = "end"
+    elif oppHealth <= 0: #Checking if the opponent has died
+        scene = f"{scene}-1"
+        displayScene(scenes[scene])
 
 #Generates an integer response
 def integerResponseGenerator():
