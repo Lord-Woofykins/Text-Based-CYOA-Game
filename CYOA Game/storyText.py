@@ -147,4 +147,44 @@ scenes = {
         "text": ["You have won the fight, but at what cost?."],
         "move": "scene5B"
     },
+    #Scene 5A
+
+    #Scene 5B
+    "scene5B": {
+        "text": ["You come out of hospital to find out some terrible news. The media has covered your protest, however instead of focusing on the (insert change here) part, they “expose” you as unhinged radicalists."],
+        "options": {
+            "option1": "Respond to the media",
+            "option2": "Sabotage a factory",
+            "optionText": "You decide to take a more hands on approach. What is your next action? (1-2) "
+        }
+    },
+    "scene5B-1": {
+        "text": ["Let's correct their opinions.", "BLUE"],
+        "move": "scene2-1-1"
+    },
+    "scene5B-2": {
+        "text": ["You get everyone together to go out to an industrial park and to sabotage a factory there."],
+        "options": {
+            "option1": "Public Transport",
+            "option2": "Private Dirty Automotive Vehicle",
+            "optionText": "How do you get there? (1-2) "
+        }
+    },
+    "scene5B-2-1": {
+        "text": ["Public transport #1!!! On the way, you look out of the window and gain urban knowledge. +1 stealth boost."],
+        "stealth": 1,
+        "move": "scene6B"
+    },
+    "scene5B-2-2": {
+        "text": ["You drive in your loud, emission creating car. This is a poor way to spend your time and it makes you tired. You lose 1 stealth."],
+        "stealth": -1,
+        "move": "scene6B"
+    },
+    #Scene 6A
+
+    #Scene 6B
+    "scene6B": {
+        "text": ["You sneak into the factory, however you notice a guard nearby."],
+        "challengeSneak": "Sneak past the guard?",
+    },
 }

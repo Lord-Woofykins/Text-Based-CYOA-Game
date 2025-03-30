@@ -20,6 +20,7 @@ itemTypes = {
     "food": ["apple", "sandwich"],
 }
 foodBonus = 25
+stealth = 3
 
 inventory = ["apple"]
 playerHealth = 100
