@@ -21,10 +21,11 @@ itemTypes = {
 }
 
 inventory = ["apple"]
-health = 100
+playerHealth = 100
+attack = 12
 
 inventoryBind = "z"
-healthBind = "x"
+playerHealthBind = "x"
 
 # Print statements below this point
 print(os.getcwd())
@@ -102,6 +103,60 @@ def challengeSpeechContest():
         scene = "scene3A"
         displayScene(scenes[scene])
 
+def challengeFight():
+    global scene
+    oppHealth = 80
+    oppAttack = 10
+    messagePrinter("In the background, a chant can be heard: 'Hit him', 'Hit him', 'Hit him'!")
+    messagePrinter("The nimby snarles at you, and spits on the ground.")
+    print()
+    fightStatus = 'alert'
+    while fightStatus != 'dead':
+        messagePrinter(f"Nimby Stats: Health: {oppHealth} | Attack: {oppAttack} | Status: {fightStatus}")
+        messagePrinter("Options: (1) Attack | (2) Bribe | (3) Use Item | (4) Flee | (5) Ignore")
+        print()
+        messagePrinter(f"Remember: Press [{inventoryBind}] to see your inventory and [{playerHealthBind}] to see your health!")
+
+        #Getting an integer response
+        response = 0
+        while response != 0:
+            try:
+                response = int(inputHandler())
+            except ValueError:
+                messagePrinter("Please enter a number.")
+                response = 0
+        
+        #Determining outcome for attack option
+        if response == 1:
+            if fightStatus == 'stunned':
+                if random.randint(0, 1) == 0:
+                    messagePrinter("Your hit strikes them, but the nimby manages to stagger to his feet.", GREEN)
+                    oppHealth -= attack
+                    fightStatus = 'angry'
+                else:
+                    messagePrinter("You miss.")
+            elif fightStatus == 'angry':
+                messagePrinter("You attempt to strike the nimby, but they block your punch and counter.", RED)
+                playerHealth -= attack
+                fightStatus = 'stunned'
+            else:
+                roll = random.randint(0, 3)
+                if roll == 0:
+                    messagePrinter("You hit the nimby, and they fall to the ground.", GREEN)
+                    oppHealth -= attack
+                    fightStatus = 'stunned'
+                elif roll in [1, 2]:
+                    messagePrinter('You land a successful strike on them!', GREEN)
+                    oppHealth -= attack
+                    fightStatus = 'angry'
+                else:
+                    messagePrinter("You attempt to hit the nimby, but they manage to dodge just in time.", RED)
+                    fightStatus = 'angry'
+
+
+
+
+
 
 # Print messages with a delay between letters
 def messagePrinter(message, currentColour=END):
@@ -114,7 +169,7 @@ def messagePrinter(message, currentColour=END):
 
 #Setting keybinds and interacting with the player's responses
 def keyBindHandler():
-    global inventoryBind, healthBind #Accessing the global variables to change them
+    global inventoryBind, playerHealthBind #Accessing the global variables to change them
     response = input("Change key bindings? (y/n)").lower()
     while response != "y" and response != "n": #Checking if the response is either y or n
         messagePrinter("Please enter a valid response.")
@@ -127,15 +182,15 @@ def keyBindHandler():
         while inventoryBind in ["1", "2", "3", "4", "", "True", "False"]:
             messagePrinter(f"[{inventoryBind}] is already bound to an option, please choose another key.")
             inventoryBind = input("Inventory: ")
-        healthBind = input("Health: ")
-        while healthBind in ["1", "2", "3", "4", "", "True", "False", inventoryBind]:
-            if healthBind == inventoryBind:
+        playerHealthBind = input("Health: ")
+        while playerHealthBind in ["1", "2", "3", "4", "", "True", "False", inventoryBind]:
+            if playerHealthBind == inventoryBind:
                 messagePrinter(f"[{inventoryBind}] is already bound to inventory, please choose another key.")
-            elif healthBind in ["1", "2", "3", "4", "", "True", "False"]:
-                messagePrinter(f"[{healthBind}] is already bound to an option, please choose another key.")
-            healthBind = input("Health: ")
+            elif playerHealthBind in ["1", "2", "3", "4", "", "True", "False"]:
+                messagePrinter(f"[{playerHealthBind}] is already bound to an option, please choose another key.")
+            playerHealthBind = input("Health: ")
         messagePrinter("Key bindings have been changed, your new key bindings are:")
-        messagePrinter(f"Inventory: [{inventoryBind}]" + "\n" + f"Health: [{healthBind}]" + "\n")
+        messagePrinter(f"Inventory: [{inventoryBind}]" + "\n" + f"Health: [{playerHealthBind}]" + "\n")
     return response
 
 def moveScene(sceneKey):
@@ -202,8 +257,8 @@ def displayScene(sceneKey):
         messagePrinter(f"A {sceneKey["removeItem"].lower()} has been removed from your inventory.")
 
     if "health" in sceneKey: #Checking if there is a health change
-        health += sceneKey["health"]
-        if health <= 0: #Checking if the health is less than or equal to 0
+        playerHealth += sceneKey["health"]
+        if playerHealth <= 0: #Checking if the health is less than or equal to 0
             messagePrinter("You have died.")
             scene = "end"
 
@@ -265,8 +320,8 @@ def inputHandler(inputText):
         else:
             messagePrinter("Inventory is empty.")
         inputHandler(inputText)
-    elif response == healthBind: #Showing health
-        messagePrinter(f"Health: {health}")
+    elif response == playerHealthBind: #Showing health
+        messagePrinter(f"Health: {playerHealth}")
         inputHandler(inputText)
 
     return response #Returning a response to be used by functions such as optionHandler or boolHandler
@@ -278,7 +333,7 @@ def intro():
     messagePrinter("Welcome To Overexcited Activist!" + "\n")
     time.sleep(0.2)
     messagePrinter("Controls:")
-    messagePrinter(f"Inventory: [{inventoryBind}]" + "\n" + f"Health: [{healthBind}]" + "\n")
+    messagePrinter(f"Inventory: [{inventoryBind}]" + "\n" + f"Health: [{playerHealthBind}]" + "\n")
     time.sleep(0.2)
 
     #Requesting changes to keybinds of inventory and health
