@@ -1,5 +1,6 @@
 import os
 import time
+import random
 from storyText import scenes
 
 # Clear the terminal 
@@ -181,12 +182,18 @@ def optionHandler(sceneKey):
 
 # Display the current scene and its options
 def displayScene(sceneKey):
+    global scene
     os.system("clear")
     messagePrinter(sceneKey["text"]) #Displaying the text of the scene
+
+    #Items
     if "item" in sceneKey: #Adding any items to the inventory
         inventory.append(sceneKey["item"])
         print()
         messagePrinter(f"A {sceneKey["item"]} has been added to you inventory!")
+    
+    if "removeItem" in sceneKey:
+        inventory.remove()
 
     if "options" in sceneKey: # Checking if there are options to choose from
         #Displaying the options
@@ -203,6 +210,28 @@ def displayScene(sceneKey):
     elif "move" in sceneKey: #Move to the next scene
         inputHandler("")
         moveScene(sceneKey)
+
+    elif "opportunity" in sceneKey: #Handling opportunities based on items held
+        if sceneKey["opportunity"][0] in inventory:
+            response = 0
+            while response != "y" or response != "n":
+                print()
+                response = inputHandler(sceneKey["opportunity"][1])
+                if response == "y":
+                    if random.randint(0, 1) == 0:
+                        scene = f"{scene}-1"
+                        displayScene(scenes[scene])
+                    else:
+                        scene = f"{scene}-2"
+                        displayScene(scenes[scene])
+                elif response == "n":
+                    scene = f"{scene}-3"
+                    displayScene(scenes[scene])
+                else:
+                    print("Please input either y/n.")
+        else:
+            scene = f"{scene}-3"
+            displayScene(scenes[scene])
     
     elif "challengeSpeech" in sceneKey:
         messagePrinter(sceneKey["challengeSpeech"])
