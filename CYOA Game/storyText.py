@@ -185,6 +185,14 @@ scenes = {
     #Scene 6B
     "scene6B": {
         "text": ["You sneak into the factory, however you notice a guard nearby."],
-        "challengeSneak": "Sneak past the guard?",
+        "challengeSneak": "You must attempt to sneak past the guard by entering 'sneak' at the right moment.",
+    },
+    "scene6B-Success": {
+        "text": ["You stroll into the factory, very nonchalant, very demure, and hack the emissions data."],
+        "move": "scene7B"
+    },
+    "scene6B-Fail": {
+        "text": ["You are caught by the guard."],
+        "boolMoney": "scene8B"
     },
 }

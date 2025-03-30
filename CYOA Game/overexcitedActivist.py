@@ -276,6 +276,40 @@ def challengeFight(attack):
         scene = f"{scene}-3"
         displayScene(scenes[scene])
     
+def challengeSneak():
+    global scene, stealth
+
+    time.sleep(1)
+    messagePrinter("Get ready...")
+    time.sleep(2)
+
+    # Adjust difficulty based on the stealth variable
+    baseWindowStart = 2  # Base time before the window starts
+    baseWindowDuration = 1  # Base duration of the window
+
+    # Modify the time window based on stealth
+    sneakWindowStart = baseWindowStart - (stealth * 0.1)  # Higher stealth reduces the wait time
+    sneakWindowDuration = baseWindowDuration + (stealth * 0.1)  # Higher stealth increases the window duration
+    sneakWindowStart = max(0.5, sneakWindowStart)  # Ensure the start time is not too short
+    sneakWindowDuration = min(3, sneakWindowDuration)  # Cap the maximum duration
+
+    sneakWindowEnd = sneakWindowStart + sneakWindowDuration
+
+    # Inform the player when to start typing
+    messagePrinter("Type 'sneak' now!")
+    startTime = time.time()
+    inputText = input()  # Capture the player's input
+    endTime = time.time()
+
+    # Check if the input was within the correct time window
+    if sneakWindowStart <= (endTime - startTime) <= sneakWindowEnd and inputText.lower() == "sneak":
+        messagePrinter("You successfully sneak past the guard!", GREEN)
+        scene = f"{scene}-Success"
+    else:
+        messagePrinter("You failed to sneak past the guard. The guard notices you!", RED)
+        scene = f"{scene}-Fail"
+
+    displayScene(scenes[scene])
 
 #Generates an integer response
 def integerResponseGenerator():
@@ -452,6 +486,10 @@ def displayScene(sceneKey):
         messagePrinter(sceneKey["challengeFight"])
         challengeFight(attack)
     
+    elif "challengeSneak" in sceneKey:
+        messagePrinter(sceneKey["challengeSneak"])
+        challengeSneak()
+    
 
 
 #Handle general inputting from the user
@@ -496,7 +534,7 @@ def intro():
     os.system("clear")
 
 # Game Loop
-scene = "scene1" #Set the starting scene
+scene = "scene6B" #Set the starting scene
 intro() #Call into to the game
 while scene != "end":
     displayScene(scenes[scene])
