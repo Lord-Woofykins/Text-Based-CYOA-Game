@@ -130,4 +130,9 @@ scenes = {
         "text": ["You continue to set up, and together with your friend begin your “peaceful” protest. While you are chanting on your megaphone, a nimby shows up and initiates a fight."],
         "challengeFight": "You get up and make towards them, however as they turn towards you a realisation comes over you that there's no going back now."
     },
+    "scene4B-1": {
+        "text": ["You have defeated the nimby, and the crowd cheers. Looking at the fallen nimby, you feel a sense of satisfaction, but also a twinge of guilt. In their coat pocket, you find a wallet. You take it before handing him over to the ambulance."],
+        "item": "wallet",
+        "move": "scene5B"
+    },
 }
