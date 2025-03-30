@@ -120,5 +120,13 @@ scenes = {
     "scene3B-False-3": {
         "text": ["The man gets away, but that’s ok because after all it’s all about the friends we made along the way."],
         "move": "scene4B"
-    }
+    },
+
+    #Scene 4A
+
+    #Scene 4B
+    "scene4B": {
+        "text": ["You continue to set up, and together with your friend begin your “peaceful” protest. While you are chanting on your megaphone, a nimby shows up and initiates a fight."],
+        "challengeFight": "You get up and make towards them and realise that there's no going back now as they turn towards you."
+    },
 }
