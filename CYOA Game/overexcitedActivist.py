@@ -35,10 +35,15 @@ playerHealth = 100
 # Keybinds
 inventoryBind = "z"
 playerHealthBind = "x"
+saveGameBind = "s"
 
 # Backend variables
 writeDelay = 0.005
 spaceDelayMultiplier = 1.1
+
+#Starting scene
+scene = "scene1"
+
 
 # Print statements below this point
 print(os.getcwd())
@@ -556,12 +561,67 @@ def inputHandler(inputText):
 
     return response #Returning a response to be used by functions such as optionHandler or boolHandler
 
+# Save File Functions
+def saveFileWriter():
+    global inventory, playerHealth, inventoryBind, playerHealthBind, saveGameBind, scene
+
+    with open("saveFile.txt", "w") as saveFile:
+        # Write inventory
+        saveFile.write("# General player stats\n")
+        saveFile.write(f"inventory {' '.join(inventory)}\n")
+        saveFile.write(f"playerHealth {playerHealth}\n\n")
+
+        # Write keybinds
+        saveFile.write("# Keybinds\n")
+        saveFile.write(f"inventoryBind {inventoryBind}\n")
+        saveFile.write(f"playerHealthBind {playerHealthBind}\n")
+        saveFile.write(f"saveGameBind {saveGameBind}\n\n")
+
+        # Write current scene
+        saveFile.write("# Starting scene\n")
+        saveFile.write(f"scene {scene}\n")
+
+
+def saveFileLoader():
+    global inventory, playerHealth, inventoryBind, playerHealthBind, scene
+
+    try:
+        with open("saveFile.txt", "r") as saveFile:
+            lines = saveFile.readlines()
+            for line in lines:
+                if line.startwswith("inventory"):
+                    inventory = line.strip().split()[1:]  # Split and skip the "inventory" keyword
+                    inventory = [item.strip() for item in inventory]  # Ensure items are properly stripped and added as a list
+                elif line.startswith("playerHealth"):
+                    playerHealth = int(line.strip().split()[1])
+                elif line.startswith("inventoryBind"):
+                    inventoryBind = line.strip().split()[1]
+                elif line.startswith("playerHealthBind"):
+                    playerHealthBind = line.strip().split()[1]
+                elif line.startswith("saveGameBind"):
+                    saveGameBind = line.strip().split()[1]
+                elif line.startswith("scene"):
+                    scene = line.strip().split()[1]
+    except FileNotFoundError:
+        messagePrinter("No save file found. Starting a new game.", YELLOW)
+
+
+def askForSaveFileLoad():
+    response = inputHandler("Load save file and configurations? (y/n) ").lower()
+    while response not in ["y", "n"]:
+        messagePrinter("Please enter either y or n.")
+        response = inputHandler("Load save file and configurations? (y/n) ").lower()
+    if response == "y":
+        saveFileLoader()
 
 #Display opening text and handle calling of keybind function
 def intro():
     #Displaying opening text & info
     messagePrinter("Welcome To Overexcited Activist!" + "\n")
     time.sleep(0.2)
+
+    askForSaveFileLoad()
+
     messagePrinter("Controls:")
     messagePrinter(f"Inventory: [{inventoryBind}]" + "\n" + f"Health: [{playerHealthBind}]" + "\n")
     time.sleep(0.2)
@@ -578,7 +638,6 @@ def intro():
     os.system("clear")
 
 # Game Loop
-scene = "scene1" #Set the starting scene
 intro() #Call into to the game
 while scene != "end":
     displayScene(scenes[scene])

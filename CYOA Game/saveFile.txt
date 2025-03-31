@@ -1,0 +1,11 @@
+# General player stats
+inventory apple
+playerHealth 100
+
+# Keybinds
+inventoryBind z
+playerHealthBind x
+saveGameBind s
+
+# Starting scene
+scene scene1
