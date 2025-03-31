@@ -42,7 +42,7 @@ writeDelay = 0.005
 spaceDelayMultiplier = 1.1
 
 #Starting scene
-scene = "scene1"
+scene = "scene5B-2"
 
 
 # Print statements below this point
@@ -126,11 +126,11 @@ def challengeFight(attack):
     oppAttack = 10
     ignored = False
     messagePrinter("In the background, a chant can be heard: 'Hit him', 'Hit him', 'Hit him'!")
-    messagePrinter("The nimby snarles at you, and spits on the ground.")
+    messagePrinter("The challenger snarles at you, and spits on the ground.")
     print()
     fightStatus = 'alert'
     while fightStatus != 'dead' and oppHealth > 0 and playerHealth > 0: #Checking if the player or opponent has died
-        messagePrinter(f"Nimby Stats: Health: {oppHealth} | Attack: {oppAttack} | Status: {fightStatus}")
+        messagePrinter(f"challenger Stats: Health: {oppHealth} | Attack: {oppAttack} | Status: {fightStatus}")
         messagePrinter("Options: (1) Attack | (2) Bribe | (3) Use Item | (4) Flee | (5) Ignore")
         print()
         messagePrinter(f"Remember: Press [{inventoryBind}] to see your inventory and [{playerHealthBind}] to see your health!")
@@ -143,19 +143,19 @@ def challengeFight(attack):
         if response == 1:
             if fightStatus == 'stunned':
                 if random.randint(0, 1) == 0:
-                    messagePrinter("Your hit strikes them, but the nimby manages to stagger to his feet.", GREEN)
+                    messagePrinter("Your hit strikes them, but the challenger manages to stagger to his feet.", GREEN)
                     oppHealth -= attack
                     fightStatus = 'angry'
                 else:
                     messagePrinter("You miss.")
             elif fightStatus == 'angry':
-                messagePrinter("You attempt to strike the nimby, but they block your punch and counter.", RED)
+                messagePrinter("You attempt to strike the challenger, but they block your punch and counter.", RED)
                 playerHealth -= attack
                 fightStatus = 'stunned'
             else:
                 roll = random.randint(0, 3)
                 if roll == 0:
-                    messagePrinter("You hit the nimby, and they fall to the ground.", GREEN)
+                    messagePrinter("You hit the challenger, and they fall to the ground.", GREEN)
                     oppHealth -= attack
                     fightStatus = 'stunned'
                 elif roll in [1, 2]:
@@ -163,7 +163,7 @@ def challengeFight(attack):
                     oppHealth -= attack
                     fightStatus = 'angry'
                 else:
-                    messagePrinter("You attempt to hit the nimby, but they manage to dodge just in time.", RED)
+                    messagePrinter("You attempt to hit the challenger, but they manage to dodge just in time.", RED)
                     fightStatus = 'angry'
         
         #Determining outcome for bribe option
@@ -186,7 +186,7 @@ def challengeFight(attack):
                 item = inventory[response - 1] #Getting the item from the inventory
                 #Checking the bribe type, and determining the response from the opponent
                 if item in itemTypes["money"]: #Money initiates the greed response from the opponent, causing them to run away and for the fight to end
-                    messagePrinter("You bribe the nimby with money, and they run away.", GREEN)
+                    messagePrinter("You bribe the challenger with money, and they run away.", GREEN)
                     inventory.remove(item)
                     fightStatus = 'dead'
                 elif item in itemTypes["weapon"]: #Weaponry angers the opponent
@@ -194,7 +194,7 @@ def challengeFight(attack):
                     inventory.remove(item)
                     fightStatus = 'angry'
                 elif item in itemTypes["food"]: #The opponent is likely homeless and starving, so offering food stuns them since they didn't expect such kindness
-                    messagePrinter(f"You offer the {item.lower()} to the nimby. They seem confused but take it anyway.", GREEN)
+                    messagePrinter(f"You offer the {item.lower()} to the challenger. They seem confused but take it anyway.", GREEN)
                     inventory.remove(item)
                     fightStatus = 'stunned'
             else: #The player is encouraged to keep track of their stats, because choosing something that they are unable to do negatively impacts them
@@ -222,12 +222,12 @@ def challengeFight(attack):
                 item = inventory[response - 1] #Getting the item from the inventory
                 #Checking the item type, and determining the buff/response
                 if item in itemTypes["money"]:
-                    messagePrinter("Showing the nimby how rich you are only angers them, but it does improve your ego.", YELLOW)
+                    messagePrinter("Showing the challenger how rich you are only angers them, but it does improve your ego.", YELLOW)
                     inventory.remove(item)
                     fightStatus = 'angry'
                     playerHealth += 10
                 elif item in itemTypes["weapon"]:
-                    messagePrinter(f"Your {item.lower()} instills fear into the nimby, and your attack is buffed.", GREEN)
+                    messagePrinter(f"Your {item.lower()} instills fear into the challenger, and your attack is buffed.", GREEN)
                     inventory.remove(item)
                     fightStatus = 'stunned'
                     attack += 8
@@ -243,19 +243,19 @@ def challengeFight(attack):
                 continue
         
         elif response == 4: #Fleeing causes the player to lose extra health
-            messagePrinter("You fail and fall to a critical strike from the nimby.", RED)
+            messagePrinter("You fail and fall to a critical strike from the challenger.", RED)
             playerHealth -= int(oppAttack * 2)
             fightStatus = 'alert'
         
         elif response == 5: #Choosing to ignore the opponent
             if not ignored:
-                messagePrinter("The audience gasps as you turn away from the nimby, raising your megaphone to continue your speech.",)
+                messagePrinter("The audience gasps as you turn away from the challenger, raising your megaphone to continue your speech.",)
                 inputHandler('') #Requesting input to act as a break to read between text
-                messagePrinter("Turns out you were playing 5D chess all along, and as the nimby goes to strike you the horribly mistime it and somehow fall off of the stage.", GREEN)
+                messagePrinter("Turns out you were playing 5D chess all along, and as the challenger goes to strike you the horribly mistime it and somehow fall off of the stage.", GREEN)
                 oppHealth = int(oppHealth/2)
                 ignored = True
             else:
-                messagePrinter("You go too far. The nimby lands a critical strike.", RED)
+                messagePrinter("You go too far. The challenger lands a critical strike.", RED)
                 playerHealth -= int(oppAttack * 2)
 
         else:
@@ -268,14 +268,14 @@ def challengeFight(attack):
             continue
         elif fightStatus == 'alert':
             if random.randint(0, 1) == 0:
-                messagePrinter("The nimby strikes you.")
+                messagePrinter("The challenger strikes you.")
                 playerHealth -= oppAttack
             else:
                 oppHeal = random.randint(0, 15)
                 oppHealth += oppHeal
                 messagePrinter(f"They regain {oppHeal} health.")
         elif fightStatus == 'angry':
-            messagePrinter("The nimby strikes with all their might, venting their anger.")
+            messagePrinter("The challenger strikes with all their might, venting their anger.")
             playerHealth -= int(oppAttack * 1.2)
             fightStatus = 'alert'
 
@@ -430,7 +430,7 @@ def optionHandler(sceneKey):
 
 # Display the current scene and its options
 def displayScene(sceneKey):
-    global scene, countrysideEnding, nuclearVolatility, playerHealth
+    global scene, countrysideEnding, nuclearVolatility, stealth, playerHealth
     os.system("clear")
 
     if len(sceneKey["text"]) > 1: #Checking if there are parameters (colour) added to the text

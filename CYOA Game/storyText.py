@@ -139,7 +139,7 @@ scenes = {
 
     #Scene 4B
     "scene4B": {
-        "text": ["You continue to set up, and together with your friend begin your “peaceful” protest. While you are chanting on your megaphone, a nimby shows up and initiates a fight."],
+        "text": ["You continue to set up, and together with your friend begin your “peaceful” protest. While you are chanting on your megaphone, a angry looking person shows up and initiates a fight."],
         "challengeFight": "You get up and make towards them, however as they turn towards you a realisation comes over you that there's no going back now."
     },
     "scene4B-1": {
@@ -164,7 +164,7 @@ scenes = {
 
     #Scene 5B
     "scene5B": {
-        "text": ["You come out of hospital to find out some terrible news. The media has covered your protest, however instead of focusing on the (insert change here) part, they “expose” you as unhinged radicalists."],
+        "text": ["You come out of hospital to find out some terrible news. The media has covered your protest, however instead of focusing on the changes that you wanted to publicise, they “expose” you as unhinged radicalists."],
         "options": {
             "option1": "Respond to the media",
             "option2": "Sabotage a factory",
@@ -220,7 +220,7 @@ scenes = {
         "move": "scene7B-1"
     },
     "scene7B-1": {
-        "text": ["The government is so proud of your work and effort that they elect you as environment minister for Australia, and so you decide to listen to Peter Dutton. Australia becomes a leading country in nuclear power."],
+        "text": ["The government is so proud of your work and effort that they elect you as a pariment member. While you are voting, you give in to lobbyists for nuclear energy. Australia becomes a leading country in nuclear power."],
         "bool": "This is what you always wanted, right? (y/n)",
     },
     "scene7B-1-True": {
