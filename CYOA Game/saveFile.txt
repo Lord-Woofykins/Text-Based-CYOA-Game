@@ -1,5 +1,12 @@
+# Scene-specific stats
+stealth 3
+nuclearVolatility 0
+foodBonus 25
+attack 12
+countrysideEnding False
+
 # General player stats
-inventoryItems apple
+inventoryItems apple screwdriver
 playerHealthStat 100
 
 # Keybinds
@@ -8,7 +15,7 @@ playerHealthBind x
 saveGameBind s
 
 # Starting scene
-scene scene6B
+scene scene3B-False
 
 # Backend variables
 writePreset fast

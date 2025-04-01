@@ -60,8 +60,11 @@ print(os.getcwd())
 
 # Functions below this point
 
+# Handle the Speech Contest Challenge
 def challengeSpeechContest():
     global scene
+
+    # This block of print statements introduces your actions
     messagePrinter("Threadit            r/Politics")
     username = inputHandler("Choose your username: ")
     print()
@@ -70,37 +73,43 @@ def challengeSpeechContest():
     messagePrinter("| 1. Upvote (21) | 2. Downvote (7) | 3. Comments (4) |")
     print()
 
+    # This block of print statements introduces opposition actions
     messagePrinter("Comments:")
     messagePrinter("1. I agree, cheese is the worst!")
     messagePrinter("2. I'm chonky and like cheese, but I respect your opinion.")
     messagePrinter("3. u/CheeseVigilante42: Oh. Oh, you hate cheese? You just wake up in the morning and decide to be objectively wrong? CHEESE IS THE BACKBONE OF SOCIETY. You think you’re better than the entirety of France? THAN THE GRANDMA IN ITALY HANDMAKING MOZZARELLA RIGHT NOW? I bet your fridge is just air and despair. #CheeseIsLife")
 
+    # This is an optional tangent of print statements, unrelated to storyline
     messagePrinter("1 reply:")
     response = inputHandler("Open? (y/n) ")
     if response == "y":
         messagePrinter("u/Chonky: I hope you choke on a cracker. I hope you get a paper cut on your tongue. I hope you step on a lego. I hope you get a splinter under your fingernail. I hope you get a popcorn kernel stuck in the back of your throat. I hope you get a blister. I hope you get a pimple in your ear. I hope you get a mosquito bite on your eyelid. I hope you get a sunburn on your scalp. I hope you get a cramp in your foot. I hope you get a headache. I hope you get a stomach ache. I hope you get a toothache. I hope you get a brain freeze.")
     print()
     
+    # Requesting response from user
     messagePrinter("Speech Contest!" + "\n" + "Write the best (angriest) speech possible!")
     print()
-    
-    speechScore = 0
     speech = input("Speech: ")
-    #Scoring added for length
+
+    # Calculating the score derived from the response
+    speechScore = 0
+    # Scoring added for length
     if len(speech) > 150:
         speechScore += 2
     elif len(speech) > 60:
         speechScore += 2
     elif len(speech) >= 20:
         speechScore += 1
-    #Scoring added for keywords
+    # Scoring added for keywords
     keywords = ["cheese", "hate", "anger", "rage", "disgust", "pooky", "france", "italy", "mozzarella", "grandma", "backbone", "society", "wrong", "despair", "life", "vigilante", ]
     for keyword in keywords:
         if keyword in speech.lower():
             speechScore += 1
+    # Scoring added for punctuation
     speechScore += speech.count("!") + speech.count("?") + speech.count(".") + speech.count(",") #Scoring added for punctuation
-        
-    if speechScore < 4:
+    
+    # Checking if the user fails, and gives hints
+    if speechScore < 4: # Speech score of 5 to pass means at least a decent length of speech and medium difficulty based on playtesting
         messagePrinter("u/CheeseVigilante42: And THERE IT IS, folks! He crumbles.")
         if len(speech) < 10:
             messagePrinter("u/CheeseVigilante42: Imagine not even bothering to write a proper length comeback.")
@@ -129,8 +138,8 @@ def challengeSpeechContest():
         scene = "scene3A"
         displayScene(scenes[scene])
 
-#This is the function where the fight scene plays out
-#In the fight, there are two main stats to keep track of: the status of the opposition and their health, these deeply effect the outcomes and available options
+# This is the function where the fight scene plays out
+# In the fight, there are two main stats to keep track of: the status of the opposition and their health, these deeply effect the outcomes and available options
 def challengeFight(attack):
     global scene, playerHealth
     oppHealth = 80
@@ -420,6 +429,7 @@ def keyBindHandler():
         messagePrinter(f"Inventory: [{inventoryBind}]" + "\n" + f"Health: [{playerHealthBind}]" + "\n" + f"Save: [{saveGameBind}]" + "\n")
     return response
 
+# This checks what the next scene is, and progresses the storyline in that direction
 def moveScene(sceneKey):
     global scene
     scene = sceneKey["move"]
@@ -523,23 +533,26 @@ def displayScene(sceneKey):
             messagePrinter(sceneKey["boolMoneyFail"], RED)
             scene = "end"
 
-    elif "move" in sceneKey: #Move to the next scene
+    elif "move" in sceneKey: # Move to the next scene
         inputHandler("")
         moveScene(sceneKey)
 
-    elif "opportunity" in sceneKey: #Handling opportunities based on items held
+    elif "opportunity" in sceneKey: # Handling opportunities based on items held
         if sceneKey["opportunity"][0] in inventory:
             response = 0
+            # Deriving a valid response from the user
             while response != "y" or response != "n":
                 print()
-                response = inputHandler(sceneKey["opportunity"][1])
+                response = inputHandler(sceneKey["opportunity"][1]) 
                 if response == "y":
-                    if random.randint(0, 1) == 0:
+                    # Determine outcome based on a random 50/50
+                    if random.randint(0, 1) == 0: # Successful outcome
                         scene = f"{scene}-1"
                         displayScene(scenes[scene])
-                    else:
+                    else: # Failed outcome
                         scene = f"{scene}-2"
                         displayScene(scenes[scene])
+                # Declined response
                 elif response == "n":
                     scene = f"{scene}-3"
                     displayScene(scenes[scene])
@@ -575,11 +588,12 @@ def displayScene(sceneKey):
     
 
 
-#Handle general inputting from the user
+# Handle general inputting from the user
 def inputHandler(inputText):
-    #Asking for input to trigger requested functions
+    # Asking for input to trigger requested functions
     response = input(inputText)
-    if response == inventoryBind: #Showing inventory contents
+
+    if response == inventoryBind: # Showing inventory contents
         if inventory:
             messagePrinter("Inventory:")
             print()
@@ -589,19 +603,21 @@ def inputHandler(inputText):
         else:
             messagePrinter("Inventory is empty.")
         response = inputHandler(inputText)
-    elif response == playerHealthBind: #Showing health
+
+    elif response == playerHealthBind: # Showing health
         messagePrinter(f"Health: {playerHealth}")
         response = inputHandler(inputText)
-    elif response == saveGameBind:
+
+    elif response == saveGameBind: # 
         messagePrinter("Saving the game...", BLUE)
         saveFileWriter()
         messagePrinter("Save Successull!", GREEN)
-        fileLoader("saveFile.txt") #REMOVE THIS
         response = inputHandler(inputText)
 
 
     return response #Returning a response to be used by functions such as optionHandler or boolHandler
 
+# This is a utility function that finds the path to the requested fie, compatible with the operating system
 def getFilePath(file):
     currentFolder = os.path.dirname(os.path.abspath(__file__))
     filePath = os.path.join(currentFolder, file)
@@ -613,6 +629,14 @@ def saveFileWriter():
     filePath = getFilePath("saveFile.txt")
 
     with open(filePath, "w") as saveFile:
+        # Write game stats
+        saveFile.write("# Scene-specific stats\n")
+        saveFile.write(f"stealth {stealth}\n")
+        saveFile.write(f"nuclearVolatility {nuclearVolatility}\n")
+        saveFile.write(f"foodBonus {foodBonus}\n")
+        saveFile.write(f"attack {attack}\n")
+        saveFile.write(f"countrysideEnding {countrysideEnding}\n")
+
         # Write inventory
         saveFile.write("# General player stats\n")
         saveFile.write(f"inventoryItems {' '.join(inventory)}\n")
@@ -633,7 +657,7 @@ def saveFileWriter():
 
 
 def fileLoader(fileName):
-    global inventory, playerHealth, inventoryBind, playerHealthBind, saveGameBind, scene, writePreset
+    global inventory, playerHealth, inventoryBind, playerHealthBind, saveGameBind, scene, writePreset, stealth, nuclearVolatility, foodBonus, attack, countrysideEnding
     filePath = getFilePath(fileName)
 
     messagePrinter("Loading Save File...", BLUE)
@@ -658,6 +682,16 @@ def fileLoader(fileName):
                     scene = line.strip().split()[1]
                 elif line.startswith("writePreset"):
                     writePreset = line.strip().split()[1]
+                elif line.startswith("stealth"):
+                    stealth = line.strip().split()[1]
+                elif line.startswith("nuclearVolatility"):
+                    nuclearVolatility = line.strip().split()[1]
+                elif line.startswith("foodBonus"):
+                    foodBonus = line.strip().split()[1]
+                elif line.startswith("attack"):
+                    attack = line.strip().split()[1]
+                elif line.startswith("countrysideEnding"):
+                    countrysideEnding = line.strip().split()[1]
     except FileNotFoundError:
         messagePrinter("No save file found. Starting a new game.", YELLOW)
     
