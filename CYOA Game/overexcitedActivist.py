@@ -66,7 +66,7 @@ def challengeSpeechContest():
     username = inputHandler("Choose your username: ")
     print()
     messagePrinter("Threadit            r/Politics")
-    messagePrinter(f"{username}: I hate cheese! #CheeseIsBad")
+    messagePrinter(f"u/{username}: I hate cheese! #CheeseIsBad")
     messagePrinter("| 1. Upvote (21) | 2. Downvote (7) | 3. Comments (4) |")
     print()
 
@@ -125,6 +125,7 @@ def challengeSpeechContest():
         messagePrinter("u/CheeseVigilante42: FINE, I'LL ADDRESS THE ELEPHANT IN THE ROOM" + "\n" + "I'm the VICTIM here. Do you know how many alt accounts I've been banned from? SEVENTEEN. All because I dared to speak the TRUTH about cheese. MY LAWYER WILL BE IN TOUCH. *Proceeds to dramatically delete reddit account*")
         if speechScore > 8:
             messagePrinter("The mods of the thread have given you money to help you out of the debt that you must be because of the job that you must've lost in sacrifice of the time taken to write that speech.")
+        inputHandler("")
         scene = "scene3A"
         displayScene(scenes[scene])
 
@@ -291,11 +292,14 @@ def challengeFight(attack):
 
     #Ending the fight
     if playerHealth <= 0: #Checking if the player has died
+        inputHandler("")
         scene = f"{scene}-1"
     elif oppHealth <= 0: #Checking if the opponent has died
+        inputHandler("")
         scene = f"{scene}-2"
         displayScene(scenes[scene])
     elif fightStatus == 'dead': #Checking if the opponent has fled
+        inputHandler("")
         scene = f"{scene}-3"
         displayScene(scenes[scene])
     
@@ -327,16 +331,18 @@ def challengeSneak(stealth):
     # Check if the input was within the correct time window
     if sneakWindowStart <= (endTime - startTime) <= sneakWindowEnd and inputText.lower() == "sneak":
         messagePrinter("You successfully sneak past the guard!", GREEN)
+        inputHandler("")
         scene = f"{scene}-Success"
     else:
         messagePrinter("You failed to sneak past the guard. The guard notices you!", RED)
+        inputHandler("")
         scene = f"{scene}-Fail"
 
     displayScene(scenes[scene])
 
 #Function handling the nuclear meltdown challenge
 #The challenge is made purposefully easy to put emphasis on the useer making their own decision to pursue this nuclear narrative
-def challengeMeltdown(sceneKey, nuclearVolatility):
+def challengeMeltdown(nuclearVolatility):
     global scene
     response = inputHandler("Prevent the meltdown. Hint: Type 'calm' the required number of times. ")
     calmCount = 0
@@ -372,7 +378,7 @@ def messagePrinter(message, currentColour=END):
 
 #Setting keybinds and interacting with the player's responses
 def keyBindHandler():
-    global inventoryBind, playerHealthBind, playerHealth #Accessing the global variables to change them
+    global inventoryBind, playerHealthBind, playerHealth, saveGameBind #Accessing the global variables to change them
     response = input("Change key bindings? (y/n) ").lower()
     while response != "y" and response != "n": #Checking if the response is either y or n
         messagePrinter("Please enter a valid response.")
@@ -404,10 +410,10 @@ def keyBindHandler():
             if saveGameBind == inventoryBind:
                 messagePrinter(f"[{inventoryBind}] is already bound to inventory, please choose another key.")
             elif saveGameBind == playerHealthBind:
-                messagePrinter(f"[{playerHealthBind}] is already bound to inventory, please choose another key.")
+                messagePrinter(f"[{playerHealthBind}] is already bound to health, please choose another key.")
 
             #Ensuring that the binding won't overlap with future options, overprotective just in case
-            elif saveGameBind in ["1", "2", "3", "4", "", "True", "False", "sneak", "calm"]:
+            elif saveGameBind in ["1", "2", "3", "4", "", "True", "False"]:
                 messagePrinter(f"[{saveGameBind}] is already bound to an option, please choose another key.")
             saveGameBind = input("Save game: ")
         messagePrinter("Key bindings have been changed, your new key bindings are:")
@@ -558,7 +564,7 @@ def displayScene(sceneKey):
     
     elif "challengeMeltdown" in sceneKey:
         messagePrinter(sceneKey["challengeMeltdown"])
-        challengeMeltdown(sceneKey, nuclearVolatility)
+        challengeMeltdown(nuclearVolatility)
     
     elif "peacefullEnding" in sceneKey:
         if countrysideEnding == True:
@@ -620,7 +626,7 @@ def saveFileWriter():
 
         # Write current scene
         saveFile.write("# Starting scene\n")
-        saveFile.write(f"scene {scene}\n")
+        saveFile.write(f"scene {scene}\n\n")
 
         saveFile.write("# Backend variables\n")
         saveFile.write(f"writePreset {writePreset}\n")
@@ -629,12 +635,14 @@ def saveFileWriter():
 def fileLoader(fileName):
     global inventory, playerHealth, inventoryBind, playerHealthBind, saveGameBind, scene, writePreset
     filePath = getFilePath(fileName)
+
+    messagePrinter("Loading Save File...", BLUE)
+    time.sleep(0.5) #This is only to give the feeling that something is happenning
     
     try:
         with open(filePath, "r") as file:
             lines = file.readlines()
             for line in lines:
-                print(line)
                 if line.startswith("inventoryItems"):
                     inventory = line.strip().split()[1:]  # Split and skip the "inventory" keyword
                     inventory = [item.strip() for item in inventory]  # Ensure items are properly stripped and added as a list
@@ -652,6 +660,8 @@ def fileLoader(fileName):
                     writePreset = line.strip().split()[1]
     except FileNotFoundError:
         messagePrinter("No save file found. Starting a new game.", YELLOW)
+    
+    messagePrinter("File loaded successfully!", GREEN)
 
 
 def askForSaveFileLoad():
@@ -664,16 +674,45 @@ def askForSaveFileLoad():
     elif response == "b":
         fileLoader("newGame.txt")
 
+def writeDelayDemo():
+    global writeDelay
+
+    for speed in writeSpeedPresets:
+        writeDelay = writeSpeedPresets[speed]
+        messagePrinter(f"Example of {speed} speed.")
+        time.sleep(0.5)
+
+def writeSpeedHandler():
+    global writeDelay
+    messagePrinter("Choose your writing speed:\n")
+    response = inputHandler("See Demo Speeds? (y/n) ")
+    while response != "y" and response != "n":
+        messagePrinter("Please input either y or n.")
+        response = inputHandler("See Demo Speeds? (y/n) ")
+    if response == "y":
+        writeDelayDemo()
+    response = input("Choose your preferred write speed: [1] slow | [2] medium | [3] medium-fast | [4] fast ")
+    while response not in ["1", "2", "3", "4"]:
+        response = input("Choose your preferred write speed: [1] slow | [2] medium | [3] medium-fast | [4] fast ")
+    presets = []
+    for key in writeSpeedPresets:
+        presets.append(writeSpeedPresets[key])
+    counter = 1
+    for value in presets:
+        if counter == int(response):
+            writeDelay = value
+        counter += 1
+    
+
 #Display opening text and handle calling of keybind function
 def intro():
-    global writeDelay
     #Displaying opening text & info
     messagePrinter("Welcome To Overexcited Activist!" + "\n")
     time.sleep(0.2)
 
     askForSaveFileLoad()
-
-    writeDelay = writeSpeedPresets[writePreset]
+    writeSpeedHandler()
+    
     messagePrinter("Controls:")
     messagePrinter(f"Inventory: [{inventoryBind}]" + "\n" + f"Health: [{playerHealthBind}]" + "\n" + f"Save: [{saveGameBind}]" + "\n")
     time.sleep(0.2)

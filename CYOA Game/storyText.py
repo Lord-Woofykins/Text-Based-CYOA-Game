@@ -219,7 +219,7 @@ scenes = {
         "move": "scene7B-1"
     },
     "scene7B-1": {
-        "text": ["The government is so proud of your work and effort that they elect you as a pariment member. While you are voting, you give in to lobbyists for nuclear energy. Australia becomes a leading country in nuclear power."],
+        "text": ["The government is so proud of your work and effort that they elect you as a parliment member. While you are voting, you give in to lobbyists for nuclear energy. Australia becomes a leading country in nuclear power."],
         "bool": "This is what you always wanted, right? (y/n)",
     },
     "scene7B-1-True": {

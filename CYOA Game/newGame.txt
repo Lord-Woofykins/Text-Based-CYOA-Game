@@ -5,7 +5,7 @@ playerHealthStat 100
 # Keybinds
 inventoryBind i
 playerHealthBind o
-saveGameBind u
+saveGameBind s
 
 # Starting scene
 scene scene1

@@ -8,7 +8,7 @@ playerHealthBind x
 saveGameBind s
 
 # Starting scene
-scene scene5B-2
+scene scene6B
 
 # Backend variables
-writePreset medium-fast
+writePreset fast
