@@ -697,7 +697,7 @@ def fileLoader(fileName):
     
     messagePrinter("File loaded successfully!", GREEN)
 
-
+# Request either a previous save file to be loaded or to start a new game
 def askForSaveFileLoad():
     response = inputHandler("[a] Load save file and configurations" + "\n" + "[b] New Game (a/b) ").lower()
     while response not in ["a", "b"]:
@@ -708,29 +708,42 @@ def askForSaveFileLoad():
     elif response == "b":
         fileLoader("newGame.txt")
 
+# Print sample text at various speeds
 def writeDelayDemo():
     global writeDelay
-
+    # Cycles through the speeds and displays a samble text at that speed
     for speed in writeSpeedPresets:
         writeDelay = writeSpeedPresets[speed]
         messagePrinter(f"Example of {speed} speed.")
         time.sleep(0.5)
 
+# Changing the write speed variable based on responses, and determining whether to show the write demo
 def writeSpeedHandler():
-    global writeDelay
     messagePrinter("Choose your writing speed:\n")
+
+    # Requesting to show demo speeds
     response = inputHandler("See Demo Speeds? (y/n) ")
     while response != "y" and response != "n":
         messagePrinter("Please input either y or n.")
         response = inputHandler("See Demo Speeds? (y/n) ")
     if response == "y":
-        writeDelayDemo()
+        writeDelayDemo() # Call to write demo function
+    
+    # Requesting write speed
     response = input("Choose your preferred write speed: [1] slow | [2] medium | [3] medium-fast | [4] fast ")
     while response not in ["1", "2", "3", "4"]:
         response = input("Choose your preferred write speed: [1] slow | [2] medium | [3] medium-fast | [4] fast ")
+    setWriteSpeed(response)
+
+# Set the write speed to the chosen speed
+def setWriteSpeed(response):
+    global writeDelay
+     # Converting the values of the writeSpeedPresets dictionary into a list
     presets = []
     for key in writeSpeedPresets:
         presets.append(writeSpeedPresets[key])
+    
+    # Matching the value to the response, and setting the value
     counter = 1
     for value in presets:
         if counter == int(response):
@@ -738,15 +751,17 @@ def writeSpeedHandler():
         counter += 1
     
 
-#Display opening text and handle calling of keybind function
+#Display opening text and handle calling of various functions, for game setup of save files, keybinds and text speed
 def intro():
     #Displaying opening text & info
     messagePrinter("Welcome To Overexcited Activist!" + "\n")
     time.sleep(0.2)
 
-    askForSaveFileLoad()
-    writeSpeedHandler()
+    askForSaveFileLoad() # Starting a new game or continuing a pre-existing game
+    writeSpeedHandler() # Setting the game print speed
     
+
+    # Displaying game controls
     messagePrinter("Controls:")
     messagePrinter(f"Inventory: [{inventoryBind}]" + "\n" + f"Health: [{playerHealthBind}]" + "\n" + f"Save: [{saveGameBind}]" + "\n")
     time.sleep(0.2)
@@ -759,7 +774,7 @@ def intro():
             keyBindHandler()
             response = input("Confirm bindings? Note: [n] will retain new bindings. (y/n) ").lower()
     
-    inputHandler("Begin? ") #Requesting input to begin the game
+    inputHandler("Begin? ") #Requesting input to begin the game or demo controls
     os.system("clear")
 
 # Game Loop
