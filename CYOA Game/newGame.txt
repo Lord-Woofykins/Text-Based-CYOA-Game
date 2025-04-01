@@ -9,3 +9,6 @@ saveGameBind u
 
 # Starting scene
 scene scene1
+
+# Backend variables
+writePreset medium-fast

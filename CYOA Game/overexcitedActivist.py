@@ -38,8 +38,18 @@ playerHealthBind = "x"
 saveGameBind = "s"
 
 # Backend variables
-writeDelay = 0.005
+writeDelay = 0.01
 spaceDelayMultiplier = 1.1
+writePreset = "medium-fast"
+
+#Customisability of the game to the user
+writeSpeedPresets = {
+    "slow": 0.05,
+    "medium": 0.025,
+    "medium-fast": 0.01,
+    "fast": 0.005
+}
+
 
 #Starting scene
 scene = "scene5B-2"
@@ -580,7 +590,7 @@ def inputHandler(inputText):
         messagePrinter("Saving the game...", BLUE)
         saveFileWriter()
         messagePrinter("Save Successull!", GREEN)
-        saveFileLoader() #REMOVE THIS
+        fileLoader("saveFile.txt") #REMOVE THIS
         response = inputHandler(inputText)
 
 
@@ -593,7 +603,7 @@ def getFilePath(file):
 
 # Save File Functions
 def saveFileWriter():
-    global inventory, playerHealth, inventoryBind, playerHealthBind, saveGameBind, scene
+    global inventory, playerHealth, inventoryBind, playerHealthBind, saveGameBind, scene, writePreset
     filePath = getFilePath("saveFile.txt")
 
     with open(filePath, "w") as saveFile:
@@ -612,14 +622,17 @@ def saveFileWriter():
         saveFile.write("# Starting scene\n")
         saveFile.write(f"scene {scene}\n")
 
+        saveFile.write("# Backend variables\n")
+        saveFile.write(f"writePreset {writePreset}\n")
 
-def saveFileLoader():
-    global inventory, playerHealth, inventoryBind, playerHealthBind, saveGameBind, scene
-    filePath = getFilePath("saveFile.txt")
+
+def fileLoader(fileName):
+    global inventory, playerHealth, inventoryBind, playerHealthBind, saveGameBind, scene, writePreset
+    filePath = getFilePath(fileName)
     
     try:
-        with open(filePath, "r") as saveFile:
-            lines = saveFile.readlines()
+        with open(filePath, "r") as file:
+            lines = file.readlines()
             for line in lines:
                 print(line)
                 if line.startswith("inventoryItems"):
@@ -635,17 +648,21 @@ def saveFileLoader():
                     saveGameBind = line.strip().split()[1]
                 elif line.startswith("scene"):
                     scene = line.strip().split()[1]
+                elif line.startswith("writePreset"):
+                    writePreset = line.strip().split()[1]
     except FileNotFoundError:
         messagePrinter("No save file found. Starting a new game.", YELLOW)
 
 
 def askForSaveFileLoad():
-    response = inputHandler("Load save file and configurations? (y/n) ").lower()
-    while response not in ["y", "n"]:
-        messagePrinter("Please enter either y or n.")
-        response = inputHandler("Load save file and configurations? (y/n) ").lower()
-    if response == "y":
-        saveFileLoader()
+    response = inputHandler("[a] Load save file and configurations" + "\n" + "[b] New Game (a/b) ").lower()
+    while response not in ["a", "b"]:
+        messagePrinter("Please enter either a or b.")
+        response = inputHandler("[a] Load save file and configurations" + "\n" + "[b] New Game (a/b) ").lower()
+    if response == "a":
+        fileLoader("saveFile.txt")
+    elif response == "b":
+        fileLoader("newGame.txt")
 
 #Display opening text and handle calling of keybind function
 def intro():
