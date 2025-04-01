@@ -3,9 +3,9 @@ inventoryItems apple
 playerHealthStat 100
 
 # Keybinds
-inventoryBind z
-playerHealthBind x
-saveGameBind s
+inventoryBind i
+playerHealthBind o
+saveGameBind u
 
 # Starting scene
-scene scene5B-2
+scene scene1

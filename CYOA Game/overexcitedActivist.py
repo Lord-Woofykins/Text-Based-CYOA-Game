@@ -369,12 +369,15 @@ def keyBindHandler():
         response = input("Change key bindings? (y/n) ").lower()
 
     if response == "y": #Checking if the user wants to change the keybinds
-        inventoryBind = input("Inventory: ")
 
+        #InventoryBind Setting
+        inventoryBind = input("Inventory: ")
         #Making sure the keybinds are unique of each other and important options
         while inventoryBind in ["1", "2", "3", "4", "", "True", "False"]:
             messagePrinter(f"[{inventoryBind}] is already bound to an option, please choose another key.")
             inventoryBind = input("Inventory: ")
+        
+        #playerHealthBind Setting
         playerHealthBind = input("Health: ")
         while playerHealthBind in ["1", "2", "3", "4", "", "True", "False", inventoryBind]:
             if playerHealthBind == inventoryBind:
@@ -382,8 +385,23 @@ def keyBindHandler():
             elif playerHealthBind in ["1", "2", "3", "4", "", "True", "False"]:
                 messagePrinter(f"[{playerHealthBind}] is already bound to an option, please choose another key.")
             playerHealthBind = input("Health: ")
+        
+
+        #saveGameBind Setting
+        saveGameBind = input("Save game: ")
+        while saveGameBind in ["1", "2", "3", "4", "", "True", "False", inventoryBind, playerHealthBind]:
+            #Specifically ensuring that the binding is unique of other bindings
+            if saveGameBind == inventoryBind:
+                messagePrinter(f"[{inventoryBind}] is already bound to inventory, please choose another key.")
+            elif saveGameBind == playerHealthBind:
+                messagePrinter(f"[{playerHealthBind}] is already bound to inventory, please choose another key.")
+
+            #Ensuring that the binding won't overlap with future options, overprotective just in case
+            elif saveGameBind in ["1", "2", "3", "4", "", "True", "False", "sneak", "calm"]:
+                messagePrinter(f"[{saveGameBind}] is already bound to an option, please choose another key.")
+            saveGameBind = input("Save game: ")
         messagePrinter("Key bindings have been changed, your new key bindings are:")
-        messagePrinter(f"Inventory: [{inventoryBind}]" + "\n" + f"Health: [{playerHealthBind}]" + "\n")
+        messagePrinter(f"Inventory: [{inventoryBind}]" + "\n" + f"Health: [{playerHealthBind}]" + "\n" + f"Save: [{saveGameBind}]" + "\n")
     return response
 
 def moveScene(sceneKey):
@@ -558,18 +576,31 @@ def inputHandler(inputText):
     elif response == playerHealthBind: #Showing health
         messagePrinter(f"Health: {playerHealth}")
         response = inputHandler(inputText)
+    elif response == saveGameBind:
+        messagePrinter("Saving the game...", BLUE)
+        saveFileWriter()
+        messagePrinter("Save Successull!", GREEN)
+        saveFileLoader() #REMOVE THIS
+        response = inputHandler(inputText)
+
 
     return response #Returning a response to be used by functions such as optionHandler or boolHandler
+
+def getFilePath(file):
+    currentFolder = os.path.dirname(os.path.abspath(__file__))
+    filePath = os.path.join(currentFolder, file)
+    return filePath
 
 # Save File Functions
 def saveFileWriter():
     global inventory, playerHealth, inventoryBind, playerHealthBind, saveGameBind, scene
+    filePath = getFilePath("saveFile.txt")
 
-    with open("saveFile.txt", "w") as saveFile:
+    with open(filePath, "w") as saveFile:
         # Write inventory
         saveFile.write("# General player stats\n")
-        saveFile.write(f"inventory {' '.join(inventory)}\n")
-        saveFile.write(f"playerHealth {playerHealth}\n\n")
+        saveFile.write(f"inventoryItems {' '.join(inventory)}\n")
+        saveFile.write(f"playerHealthStat {playerHealth}\n\n")
 
         # Write keybinds
         saveFile.write("# Keybinds\n")
@@ -583,16 +614,18 @@ def saveFileWriter():
 
 
 def saveFileLoader():
-    global inventory, playerHealth, inventoryBind, playerHealthBind, scene
-
+    global inventory, playerHealth, inventoryBind, playerHealthBind, saveGameBind, scene
+    filePath = getFilePath("saveFile.txt")
+    
     try:
-        with open("saveFile.txt", "r") as saveFile:
+        with open(filePath, "r") as saveFile:
             lines = saveFile.readlines()
             for line in lines:
-                if line.startwswith("inventory"):
+                print(line)
+                if line.startswith("inventoryItems"):
                     inventory = line.strip().split()[1:]  # Split and skip the "inventory" keyword
                     inventory = [item.strip() for item in inventory]  # Ensure items are properly stripped and added as a list
-                elif line.startswith("playerHealth"):
+                elif line.startswith("playerHealthStat"):
                     playerHealth = int(line.strip().split()[1])
                 elif line.startswith("inventoryBind"):
                     inventoryBind = line.strip().split()[1]
@@ -623,7 +656,7 @@ def intro():
     askForSaveFileLoad()
 
     messagePrinter("Controls:")
-    messagePrinter(f"Inventory: [{inventoryBind}]" + "\n" + f"Health: [{playerHealthBind}]" + "\n")
+    messagePrinter(f"Inventory: [{inventoryBind}]" + "\n" + f"Health: [{playerHealthBind}]" + "\n" + f"Save: [{saveGameBind}]" + "\n")
     time.sleep(0.2)
 
     #Requesting changes to keybinds of inventory and health
