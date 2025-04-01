@@ -1,3 +1,10 @@
+# Scene-specific stats
+stealth 3
+nuclearVolatility 0
+foodBonus 25
+attack 12
+countrysideEnding False
+
 # General player stats
 inventoryItems apple
 playerHealthStat 100
