@@ -666,12 +666,14 @@ def askForSaveFileLoad():
 
 #Display opening text and handle calling of keybind function
 def intro():
+    global writeDelay
     #Displaying opening text & info
     messagePrinter("Welcome To Overexcited Activist!" + "\n")
     time.sleep(0.2)
 
     askForSaveFileLoad()
 
+    writeDelay = writeSpeedPresets[writePreset]
     messagePrinter("Controls:")
     messagePrinter(f"Inventory: [{inventoryBind}]" + "\n" + f"Health: [{playerHealthBind}]" + "\n" + f"Save: [{saveGameBind}]" + "\n")
     time.sleep(0.2)
