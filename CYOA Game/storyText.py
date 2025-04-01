@@ -111,7 +111,6 @@ scenes = {
     },
     "scene3B-True": {
         "text": ["Your friend is super mad, and grumbles to himself about how he should’ve stayed at uni instead of joining you. He will remember this."],
-        "harderPoliticalEnding": True, #This is redundant, for if I return to this project in future
         "move": "scene3-True-1"
     },
     "scene3B-False": {
