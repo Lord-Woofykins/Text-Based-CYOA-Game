@@ -56,8 +56,6 @@ scene = "scene5B-2"
 
 
 # Print statements below this point
-print(os.getcwd())
-
 # Functions below this point
 
 # Handle the Speech Contest Challenge
@@ -152,7 +150,7 @@ def challengeFight(attack):
     print()
     fightStatus = 'alert'
     while fightStatus != 'dead' and oppHealth > 0 and playerHealth > 0: #Checking if the player or opponent has died
-        messagePrinter(f"challenger Stats: Health: {oppHealth} | Attack: {oppAttack} | Status: {fightStatus}")
+        messagePrinter(f"Challenger Stats: Health: {oppHealth} | Attack: {oppAttack} | Status: {fightStatus}")
         messagePrinter("Options: (1) Attack | (2) Bribe | (3) Use Item | (4) Flee | (5) Ignore")
         print()
         messagePrinter(f"Remember: Press [{inventoryBind}] to see your inventory and [{playerHealthBind}] to see your health!")
@@ -180,7 +178,7 @@ def challengeFight(attack):
                 fightStatus = 'alert'
             # Default state causes a 1/4 roll
             else:
-                roll = random.randint(0, 3)
+                roll = random.randint(0, 4)
                 if roll == 0: # Stun + hit
                     messagePrinter("You hit the challenger, and they fall to the ground.", GREEN)
                     oppHealth -= attack
@@ -694,13 +692,13 @@ def fileLoader(fileName):
                 elif line.startswith("writePreset"):
                     writePreset = line.strip().split()[1]
                 elif line.startswith("stealth"):
-                    stealth = line.strip().split()[1]
+                    stealth = int(line.strip().split()[1])
                 elif line.startswith("nuclearVolatility"):
-                    nuclearVolatility = line.strip().split()[1]
+                    nuclearVolatility = int(line.strip().split()[1])
                 elif line.startswith("foodBonus"):
-                    foodBonus = line.strip().split()[1]
+                    foodBonus = int(line.strip().split()[1])
                 elif line.startswith("attack"):
-                    attack = line.strip().split()[1]
+                    attack = int(line.strip().split()[1])
                 elif line.startswith("countrysideEnding"):
                     countrysideEnding = line.strip().split()[1]
     # In the case that an error occurs with the saveFile not being present or inaccessible
