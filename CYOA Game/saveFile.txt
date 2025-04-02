@@ -4,7 +4,6 @@ nuclearVolatility 0
 foodBonus 25
 attack 12
 countrysideEnding False
-
 # General player stats
 inventoryItems apple
 playerHealthStat 100
@@ -15,7 +14,7 @@ playerHealthBind x
 saveGameBind s
 
 # Starting scene
-scene scene3B-False
+scene scene1
 
 # Backend variables
-writePreset fast
+writePreset medium-fast

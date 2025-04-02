@@ -645,7 +645,7 @@ def saveFileWriter():
         saveFile.write(f"nuclearVolatility {nuclearVolatility}\n")
         saveFile.write(f"foodBonus {foodBonus}\n")
         saveFile.write(f"attack {attack}\n")
-        saveFile.write(f"countrysideEnding {countrysideEnding}\n")
+        saveFile.write(f"countrysideEnding {countrysideEnding}\n\n")
 
         # Write inventory
         saveFile.write("# General player stats\n")
@@ -790,6 +790,6 @@ def intro():
     os.system("clear")
 
 # Game Loop
-intro() #Call into to the game
+intro() # Call into to the game
 while scene != "end":
     displayScene(scenes[scene])
