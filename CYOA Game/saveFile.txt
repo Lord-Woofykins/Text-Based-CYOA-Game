@@ -6,7 +6,7 @@ attack 12
 countrysideEnding False
 
 # General player stats
-inventoryItems apple screwdriver
+inventoryItems apple
 playerHealthStat 100
 
 # Keybinds
