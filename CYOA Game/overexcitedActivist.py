@@ -123,6 +123,7 @@ def challengeSpeechContest():
             messagePrinter("u/CheeseVigilante42: Could've spent more time on that one instead of rage quitting.")
         print()
         messagePrinter("You have lost the speech contest. Words hurt.")
+        # Requesting whether to try again
         response = inputHandler("Try again? (y/n) ")
         while response != "y" and response != "n":
             response = inputHandler("Try again? (y/n) ")
@@ -130,6 +131,7 @@ def challengeSpeechContest():
             scene = "end"
         else:
             challengeSpeechContest()
+    # Win message
     else:
         messagePrinter("u/CheeseVigilante42: FINE, I'LL ADDRESS THE ELEPHANT IN THE ROOM" + "\n" + "I'm the VICTIM here. Do you know how many alt accounts I've been banned from? SEVENTEEN. All because I dared to speak the TRUTH about cheese. MY LAWYER WILL BE IN TOUCH. *Proceeds to dramatically delete reddit account*")
         if speechScore > 8:
@@ -143,8 +145,8 @@ def challengeSpeechContest():
 def challengeFight(attack):
     global scene, playerHealth
     oppHealth = 80
-    oppAttack = 10
-    ignored = False
+    oppAttack = 12
+    ignored = False # Keeps track of whether the user has used the ignore trick
     messagePrinter("In the background, a chant can be heard: 'Hit him', 'Hit him', 'Hit him'!")
     messagePrinter("The challenger snarles at you, and spits on the ground.")
     print()
@@ -155,122 +157,127 @@ def challengeFight(attack):
         print()
         messagePrinter(f"Remember: Press [{inventoryBind}] to see your inventory and [{playerHealthBind}] to see your health!")
 
-        response = integerResponseGenerator() #Asking for user input
+        response = integerResponseGenerator() # Asking for user input
         
-        #The player's turn
+        # The player's turn
 
-        #Determining outcome for attack option
+        # Determining outcome for attack option
         if response == 1:
+            # Roll a 50/50 and deduct health from opponent if successful
             if fightStatus == 'stunned':
                 if random.randint(0, 1) == 0:
                     messagePrinter("Your hit strikes them, but the challenger manages to stagger to his feet.", GREEN)
                     oppHealth -= attack
                     fightStatus = 'angry'
+                # 50/50 chance fail
                 else:
                     messagePrinter("You miss.")
+                    fightStatus = 'alert'
+            # Checks for angry state, and causes loss of health
             elif fightStatus == 'angry':
                 messagePrinter("You attempt to strike the challenger, but they block your punch and counter.", RED)
                 playerHealth -= attack
-                fightStatus = 'stunned'
+                fightStatus = 'alert'
+            # Default state causes a 1/4 roll
             else:
                 roll = random.randint(0, 3)
-                if roll == 0:
+                if roll == 0: # Stun + hit
                     messagePrinter("You hit the challenger, and they fall to the ground.", GREEN)
                     oppHealth -= attack
                     fightStatus = 'stunned'
-                elif roll in [1, 2]:
+                elif roll in [1, 2]: # Hit + angry
                     messagePrinter('You land a successful strike on them!', GREEN)
                     oppHealth -= attack
                     fightStatus = 'angry'
-                else:
+                else: # Fail + angry status
                     messagePrinter("You attempt to hit the challenger, but they manage to dodge just in time.", RED)
                     fightStatus = 'angry'
         
-        #Determining outcome for bribe option
+        # Determining outcome for bribe option
         elif response == 2:
             if len(inventory) > 0:
                 messagePrinter("What do you bribe with?")
 
-                #Displaying inventory with options
+                # Displaying inventory with options
                 i = 1
                 for item in inventory:
                     messagePrinter(f"({i}) {item.upper()}")
                     i += 1
                 
-                #Requesting a valid integer response
+                # Requesting a valid integer response
                 response = integerResponseGenerator()
                 while response not in range(1, len(inventory) + 1):
                     messagePrinter("Please enter a valid option.")
                     response = integerResponseGenerator()
 
-                item = inventory[response - 1] #Getting the item from the inventory
-                #Checking the bribe type, and determining the response from the opponent
-                if item in itemTypes["money"]: #Money initiates the greed response from the opponent, causing them to run away and for the fight to end
+                item = inventory[response - 1] # Getting the item from the inventory
+                # Checking the bribe type, and determining the response from the opponent
+                if item in itemTypes["money"]: # Money initiates the greed response from the opponent, causing them to run away and for the fight to end
                     messagePrinter("You bribe the challenger with money, and they run away.", GREEN)
                     inventory.remove(item)
                     fightStatus = 'dead'
-                elif item in itemTypes["weapon"]: #Weaponry angers the opponent
+                elif item in itemTypes["weapon"]: # Weaponry angers the opponent
                     messagePrinter(f"You take out the {item.lower()}, but for some reason the sight of it only makes them angrier. They knock it out of your hand before you can formally offer it.", RED)
                     inventory.remove(item)
                     fightStatus = 'angry'
-                elif item in itemTypes["food"]: #The opponent is likely homeless and starving, so offering food stuns them since they didn't expect such kindness
+                elif item in itemTypes["food"]: # The opponent is likely homeless and starving, so offering food stuns them since they didn't expect such kindness
                     messagePrinter(f"You offer the {item.lower()} to the challenger. They seem confused but take it anyway.", GREEN)
                     inventory.remove(item)
                     fightStatus = 'stunned'
-            else: #The player is encouraged to keep track of their stats, because choosing something that they are unable to do negatively impacts them
+            else: # The player is encouraged to keep track of their stats, because choosing something that they are unable to do negatively impacts them
                 messagePrinter("You don't have anything!")
                 fightStatus = 'alert'
                 continue
         
-        #Item use function is largely the same, other than different effects and text
+        # Item use function is largely the same, other than different effects and text
         elif response == 3:
             if len(inventory) > 0:
                 messagePrinter("What do you use?")
 
-                #Displaying inventory with options
+                # Displaying inventory with options
                 i = 1
                 for item in inventory:
                     messagePrinter(f"({i}) {item.upper()}")
                     i += 1
                 
-                #Requesting a valid integer response
+                # Requesting a valid integer response
                 response = integerResponseGenerator()
                 while response not in range(1, len(inventory) + 1):
                     messagePrinter("Please enter a valid option.")
                     response = integerResponseGenerator()
 
-                item = inventory[response - 1] #Getting the item from the inventory
-                #Checking the item type, and determining the buff/response
-                if item in itemTypes["money"]:
+                item = inventory[response - 1] # Getting the item from the inventory
+                # Checking the item type, and determining the buff/response
+                if item in itemTypes["money"]: # Increase of player health and angry status for money
                     messagePrinter("Showing the challenger how rich you are only angers them, but it does improve your ego.", YELLOW)
                     inventory.remove(item)
                     fightStatus = 'angry'
                     playerHealth += 10
-                elif item in itemTypes["weapon"]:
+                elif item in itemTypes["weapon"]: # Attack increase for weapon use
                     messagePrinter(f"Your {item.lower()} instills fear into the challenger, and your attack is buffed.", GREEN)
                     inventory.remove(item)
                     fightStatus = 'stunned'
                     attack += 8
-                elif item in itemTypes["food"]:
+                elif item in itemTypes["food"]: # Increase in health and reset of fightstatus for food
                     messagePrinter(f"You eat the {item.lower()} and gain {foodBonus} health.", GREEN)
                     inventory.remove(item)
                     playerHealth += foodBonus
                     fightStatus = 'alert'
             
-            else: #Resetting the status of opposition due to ill-chosen option
+            else: # Resetting the status of opposition in response to invalid option
                 messagePrinter("You don't have anything!", YELLOW)
                 fightStatus = 'alert'
                 continue
         
-        elif response == 4: #Fleeing causes the player to lose extra health
+        elif response == 4: # Fleeing causes the player to lose extra health
             messagePrinter("You fail and fall to a critical strike from the challenger.", RED)
             playerHealth -= int(oppAttack * 2)
             fightStatus = 'alert'
         
-        elif response == 5: #Choosing to ignore the opponent
+        elif response == 5: # Choosing to ignore the opponent
             if not ignored:
                 messagePrinter("The audience gasps as you turn away from the challenger, raising your megaphone to continue your speech.",)
-                inputHandler('') #Requesting input to act as a break to read between text
+                inputHandler('') # Requesting input to act as a break to read between text
                 messagePrinter("Turns out you were playing 5D chess all along, and as the challenger goes to strike you the horribly mistime it and somehow fall off of the stage.", GREEN)
                 oppHealth = int(oppHealth/2)
                 ignored = True
@@ -281,8 +288,8 @@ def challengeFight(attack):
         else:
             messagePrinter("Entering an invalid integer caused the opponent to gain a free attack.", RED)
         
-        #The opponent's turn
-        print() #Print statement to decrease visual congestion of the terminal
+        # The opponent's turn
+        print() # Print statement to decrease visual congestion of the terminal
         if fightStatus == 'stunned':
             fightStatus = 'alert'
             continue
@@ -349,8 +356,8 @@ def challengeSneak(stealth):
 
     displayScene(scenes[scene])
 
-#Function handling the nuclear meltdown challenge
-#The challenge is made purposefully easy to put emphasis on the useer making their own decision to pursue this nuclear narrative
+# Function handling the nuclear meltdown challenge
+# The challenge is made purposefully easy to put emphasis on the useer making their own decision to pursue this nuclear narrative
 def challengeMeltdown(nuclearVolatility):
     global scene
     response = inputHandler("Prevent the meltdown. Hint: Type 'calm' the required number of times. ")
@@ -365,7 +372,7 @@ def challengeMeltdown(nuclearVolatility):
         scene = f"{scene}-1"
         displayScene(scenes[scene])
 
-#Generates an integer response
+# Generates an integer response
 def integerResponseGenerator():
     response = 0
     while response == 0:
@@ -655,7 +662,7 @@ def saveFileWriter():
         saveFile.write("# Backend variables\n")
         saveFile.write(f"writePreset {writePreset}\n")
 
-
+# Reads the requested file and adds the 
 def fileLoader(fileName):
     global inventory, playerHealth, inventoryBind, playerHealthBind, saveGameBind, scene, writePreset, stealth, nuclearVolatility, foodBonus, attack, countrysideEnding
     filePath = getFilePath(fileName)
