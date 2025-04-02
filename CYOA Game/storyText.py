@@ -1,3 +1,8 @@
+# This is dictionary is formatted such that:
+# Each nested dictionary respresents a "sceneKey" from which that stage of the storyline is derived
+# The scene will always begin with "text", with the value in a list to allow for additional formatting parameters such as colour
+# After the text, there will optionally be some kind of stat adjustment such as item gain or 'sneak' increase
+# Ending the nested dictionary is a way to progress, such as an "options" block or "move" command
 scenes = {
     #Scene 1
     "scene1": {
@@ -134,8 +139,6 @@ scenes = {
         "move": "scene4B"
     },
 
-    #Scene 4A
-
     #Scene 4B
     "scene4B": {
         "text": ["You continue to set up, and together with your friend begin your “peaceful” protest. While you are chanting on your megaphone, a angry looking person shows up and initiates a fight."],
@@ -159,7 +162,6 @@ scenes = {
         "text": ["You have won the fight, but at what cost?."],
         "move": "scene5B"
     },
-    #Scene 5A
 
     #Scene 5B
     "scene5B": {
@@ -192,7 +194,6 @@ scenes = {
         "stealth": -1,
         "move": "scene6B"
     },
-    #Scene 6A
 
     #Scene 6B
     "scene6B": {
