@@ -566,10 +566,12 @@ def displayScene(sceneKey):
                 else:
                     print("Please input either y/n.")
         else:
+            # Triggered when opportunity unavailable due to current inventory status
             response = inputHandler('')
             scene = f"{scene}-3"
             displayScene(scenes[scene])
     
+    # If statements checking if their respective challenges are present
     elif "challengeSpeech" in sceneKey:
         messagePrinter(sceneKey["challengeSpeech"])
         challengeSpeechContest()
@@ -586,6 +588,7 @@ def displayScene(sceneKey):
         messagePrinter(sceneKey["challengeMeltdown"])
         challengeMeltdown(nuclearVolatility)
     
+    # If statements determining which ending to take depending on the countrySideEnding variable's boolean status
     elif "peacefullEnding" in sceneKey:
         if countrysideEnding == True:
             messagePrinter(sceneKey["peacefullEnding"])
@@ -674,8 +677,9 @@ def fileLoader(fileName):
         with open(filePath, "r") as file:
             lines = file.readlines()
             for line in lines:
+                # In each elif block, the words are split between their value and keys, and the keys are assigned to their respective variables
                 if line.startswith("inventoryItems"):
-                    inventory = line.strip().split()[1:]  # Split and skip the "inventory" keyword
+                    inventory = line.strip().split()[1:]
                     inventory = [item.strip() for item in inventory]  # Ensure items are properly stripped and added as a list
                 elif line.startswith("playerHealthStat"):
                     playerHealth = int(line.strip().split()[1])
@@ -699,8 +703,9 @@ def fileLoader(fileName):
                     attack = line.strip().split()[1]
                 elif line.startswith("countrysideEnding"):
                     countrysideEnding = line.strip().split()[1]
+    # In the case that an error occurs with the saveFile not being present or inaccessible
     except FileNotFoundError:
-        messagePrinter("No save file found. Starting a new game.", YELLOW)
+        messagePrinter("No save file found. Using backup default values.", YELLOW)
     
     messagePrinter("File loaded successfully!", GREEN)
 
