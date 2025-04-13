@@ -6,16 +6,16 @@ attack 12
 countrysideEnding False
 
 # General player stats
-inventoryItems apple briefcase
+inventoryItems apple
 playerHealthStat 100
 
 # Keybinds
-inventoryBind i
-playerHealthBind o
-saveGameBind u
+inventoryBind z
+playerHealthBind x
+saveGameBind s
 
 # Starting scene
-scene scene4B
+scene scene2
 
 # Backend variables
 writePreset medium-fast
