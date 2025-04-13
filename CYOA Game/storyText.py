@@ -116,7 +116,7 @@ scenes = {
     },
     "scene3B-True": {
         "text": ["Your friend is super mad, and grumbles to himself about how he should’ve stayed at uni instead of joining you. He will remember this."],
-        "move": "scene3-True-1"
+        "move": "scene3A"
     },
     "scene3B-False": {
         "text": ["You tell the passerby that you already have a full party. He shows you a briefcase of cash, before turning to walk away."],
