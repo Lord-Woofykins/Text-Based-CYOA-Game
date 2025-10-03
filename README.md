@@ -1,2 +1,2 @@
-# IST
-In this repository, I work on my IST assessments.
+# Overexcited Activist
+This game was developed as part of my IST Term 1 Assessment Task
